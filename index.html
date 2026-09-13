@@ -49,17 +49,14 @@ const ctx = canvas.getContext("2d");
 
 const tamanho = 40;
 
-
-/* =========================
-   VELOCIDADE
-========================= */
-
+/* VELOCIDADE DA COBRA */
 const velocidade = 150;
 
+/* FPS VISUAL */
+const FPS = 45;
+const intervaloFrame = 1000 / FPS;
 
-/* =========================
-   COBRA
-========================= */
+let ultimoFrame = 0;
 
 let cobra = [
     {x: 600, y: 360}
@@ -80,10 +77,6 @@ let perdeu = false;
 let ultimoMovimento = performance.now();
 
 
-/* =========================
-   COMIDA
-========================= */
-
 function criarComida() {
 
     const x =
@@ -102,16 +95,11 @@ function criarComida() {
 }
 
 
-/* =========================
-   ATUALIZAR JOGO
-========================= */
-
 function atualizar() {
 
     if (perdeu) {
         return;
     }
-
 
     cobraAnterior =
         cobra.map(parte => ({
@@ -152,8 +140,6 @@ function atualizar() {
     }
 
 
-    /* PAREDE */
-
     if (
         cabeca.x < 0 ||
         cabeca.x >= 1280 ||
@@ -162,12 +148,9 @@ function atualizar() {
     ) {
 
         gameOver();
-
         return;
     }
 
-
-    /* CORPO */
 
     for (let parte of cobra) {
 
@@ -177,7 +160,6 @@ function atualizar() {
         ) {
 
             gameOver();
-
             return;
         }
     }
@@ -185,8 +167,6 @@ function atualizar() {
 
     cobra.push(cabeca);
 
-
-    /* COMIDA */
 
     if (
         cabeca.x === comida.x &&
@@ -208,8 +188,6 @@ function atualizar() {
     }
 
 
-    /* Ajusta posições anteriores */
-
     while (
         cobraAnterior.length <
         cobra.length
@@ -223,15 +201,7 @@ function atualizar() {
 }
 
 
-/* =========================
-   INTERPOLAÇÃO
-========================= */
-
-function interpolar(
-    inicio,
-    fim,
-    progresso
-) {
+function interpolar(inicio, fim, progresso) {
 
     return inicio +
         (fim - inicio) *
@@ -239,9 +209,104 @@ function interpolar(
 }
 
 
-/* =========================
-   DESENHAR
-========================= */
+function desenharRosto(x, y) {
+
+    ctx.fillStyle = "white";
+
+    let olho1X;
+    let olho1Y;
+
+    let olho2X;
+    let olho2Y;
+
+
+    if (direcao === "direita") {
+
+        olho1X = x + 27;
+        olho1Y = y + 11;
+
+        olho2X = x + 27;
+        olho2Y = y + 27;
+    }
+
+
+    if (direcao === "esquerda") {
+
+        olho1X = x + 9;
+        olho1Y = y + 11;
+
+        olho2X = x + 9;
+        olho2Y = y + 27;
+    }
+
+
+    if (direcao === "cima") {
+
+        olho1X = x + 11;
+        olho1Y = y + 9;
+
+        olho2X = x + 27;
+        olho2Y = y + 9;
+    }
+
+
+    if (direcao === "baixo") {
+
+        olho1X = x + 11;
+        olho1Y = y + 27;
+
+        olho2X = x + 27;
+        olho2Y = y + 27;
+    }
+
+
+    ctx.beginPath();
+    ctx.arc(
+        olho1X,
+        olho1Y,
+        5,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
+
+
+    ctx.beginPath();
+    ctx.arc(
+        olho2X,
+        olho2Y,
+        5,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
+
+
+    ctx.fillStyle = "black";
+
+
+    ctx.beginPath();
+    ctx.arc(
+        olho1X,
+        olho1Y,
+        2,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
+
+
+    ctx.beginPath();
+    ctx.arc(
+        olho2X,
+        olho2Y,
+        2,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
+}
+
 
 function desenhar(progresso) {
 
@@ -272,8 +337,6 @@ function desenhar(progresso) {
     ctx.fill();
 
 
-    /* COBRA */
-
     cobra.forEach(
         (parte, index) => {
 
@@ -296,10 +359,11 @@ function desenhar(progresso) {
             );
 
 
-            if (
-                index ===
-                cobra.length - 1
-            ) {
+            const cabeca =
+                index === cobra.length - 1;
+
+
+            if (cabeca) {
 
                 ctx.fillStyle =
                     "#00ff66";
@@ -324,16 +388,38 @@ function desenhar(progresso) {
 
             ctx.fill();
 
+
+            if (cabeca) {
+
+                desenharRosto(
+                    x + 2,
+                    y + 2
+                );
+
+            }
+
         }
     );
 }
 
 
-/* =========================
-   LOOP 60 FPS
-========================= */
-
 function loop(tempo) {
+
+    requestAnimationFrame(loop);
+
+
+    if (
+        tempo - ultimoFrame <
+        intervaloFrame
+    ) {
+
+        return;
+
+    }
+
+
+    ultimoFrame = tempo;
+
 
     let passou =
         tempo - ultimoMovimento;
@@ -361,15 +447,8 @@ function loop(tempo) {
 
 
     desenhar(progresso);
-
-
-    requestAnimationFrame(loop);
 }
 
-
-/* =========================
-   GAME OVER
-========================= */
 
 function gameOver() {
 
@@ -381,10 +460,6 @@ function gameOver() {
         "Você perdeu! Aperte ENTER para tentar novamente.";
 }
 
-
-/* =========================
-   REINICIAR
-========================= */
 
 function reiniciar() {
 
@@ -418,10 +493,6 @@ function reiniciar() {
     ).textContent = "";
 }
 
-
-/* =========================
-   CONTROLES
-========================= */
 
 document.addEventListener(
     "keydown",
@@ -469,8 +540,6 @@ document.addEventListener(
     }
 );
 
-
-/* INICIAR */
 
 requestAnimationFrame(loop);
 
