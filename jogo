@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Jogo da Cobrinha</title>
+
+    <style>
+
+        body {
+            background: #111;
+            color: white;
+            text-align: center;
+            font-family: Arial;
+        }
+
+        canvas {
+            background: #181818;
+            border: 3px solid white;
+
+            width: 90%;
+            max-width: 1280px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <h1>🐍 Jogo da Cobrinha</h1>
+
+    <h2>
+        Pontos:
+        <span id="pontos">0</span>
+    </h2>
+
+
+    <canvas
+        id="jogo"
+        width="1280"
+        height="720">
+    </canvas>
+
+
+    <h2 id="mensagem"></h2>
+
+
+    <script>
+
+        const canvas =
+            document.getElementById("jogo");
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        const tamanho = 40;
+
+
+        let cobra = [
+            {x: 600, y: 360}
+        ];
+
+
+        let direcao = "direita";
+
+        let comida = criarComida();
+
+        let pontos = 0;
+
+        let perdeu = false;
+
+
+
+        function criarComida() {
+
+            let x =
+                Math.floor(
+                    Math.random() *
+                    (1280 / tamanho)
+                ) * tamanho;
+
+
+            let y =
+                Math.floor(
+                    Math.random() *
+                    (720 / tamanho)
+                ) * tamanho;
+
+
+            return {
+                x: x,
+                y: y
+            };
+
+        }
+
+
+
+        function desenhar() {
+
+            ctx.fillStyle = "#181818";
+
+            ctx.fillRect(
+                0,
+                0,
+                1280,
+                720
+            );
+
+
+            // COMIDA
+
+            ctx.fillStyle = "red";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                comida.x + 20,
+                comida.y + 20,
+                16,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+
+
+
+            // COBRA
+
+            cobra.forEach(
+                function(parte, index) {
+
+                    if (
+                        index ===
+                        cobra.length - 1
+                    ) {
+
+                        ctx.fillStyle =
+                            "#00ff66";
+
+                    } else {
+
+                        ctx.fillStyle =
+                            "#00aa44";
+
+                    }
+
+
+                    ctx.fillRect(
+                        parte.x + 2,
+                        parte.y + 2,
+                        36,
+                        36
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        function atualizar() {
+
+            if (perdeu) {
+                return;
+            }
+
+
+            let cabeca = {
+
+                x:
+                    cobra[
+                        cobra.length - 1
+                    ].x,
+
+                y:
+                    cobra[
+                        cobra.length - 1
+                    ].y
+
+            };
+
+
+            if (direcao === "direita") {
+                cabeca.x += tamanho;
+            }
+
+
+            if (direcao === "esquerda") {
+                cabeca.x -= tamanho;
+            }
+
+
+            if (direcao === "cima") {
+                cabeca.y -= tamanho;
+            }
+
+
+            if (direcao === "baixo") {
+                cabeca.y += tamanho;
+            }
+
+
+
+            // BATEU NA PAREDE
+
+            if (
+                cabeca.x < 0 ||
+                cabeca.x >= 1280 ||
+                cabeca.y < 0 ||
+                cabeca.y >= 720
+            ) {
+
+                gameOver();
+
+                return;
+
+            }
+
+
+
+            // BATEU NO CORPO
+
+            for (let parte of cobra) {
+
+                if (
+                    parte.x === cabeca.x &&
+                    parte.y === cabeca.y
+                ) {
+
+                    gameOver();
+
+                    return;
+
+                }
+
+            }
+
+
+
+            cobra.push(cabeca);
+
+
+
+            // COMEU
+
+            if (
+                cabeca.x === comida.x &&
+                cabeca.y === comida.y
+            ) {
+
+                pontos++;
+
+                document.getElementById(
+                    "pontos"
+                ).textContent = pontos;
+
+
+                comida = criarComida();
+
+            } else {
+
+                cobra.shift();
+
+            }
+
+
+            desenhar();
+
+        }
+
+
+
+        function gameOver() {
+
+            perdeu = true;
+
+            document.getElementById(
+                "mensagem"
+            ).innerHTML =
+                "Você perdeu! Aperte ENTER para tentar novamente.";
+
+        }
+
+
+
+        function reiniciar() {
+
+            cobra = [
+                {x: 600, y: 360}
+            ];
+
+            direcao = "direita";
+
+            comida = criarComida();
+
+            pontos = 0;
+
+            perdeu = false;
+
+
+            document.getElementById(
+                "pontos"
+            ).textContent = 0;
+
+
+            document.getElementById(
+                "mensagem"
+            ).textContent = "";
+
+
+            desenhar();
+
+        }
+
+
+
+        document.addEventListener(
+            "keydown",
+
+            function(evento) {
+
+
+                if (
+                    evento.key === "ArrowUp" &&
+                    direcao !== "baixo"
+                ) {
+
+                    direcao = "cima";
+
+                }
+
+
+                if (
+                    evento.key === "ArrowDown" &&
+                    direcao !== "cima"
+                ) {
+
+                    direcao = "baixo";
+
+                }
+
+
+                if (
+                    evento.key === "ArrowLeft" &&
+                    direcao !== "direita"
+                ) {
+
+                    direcao = "esquerda";
+
+                }
+
+
+                if (
+                    evento.key === "ArrowRight" &&
+                    direcao !== "esquerda"
+                ) {
+
+                    direcao = "direita";
+
+                }
+
+
+                if (
+                    evento.key === "Enter" &&
+                    perdeu
+                ) {
+
+                    reiniciar();
+
+                }
+
+            }
+        );
+
+
+        desenhar();
+
+
+        setInterval(
+            atualizar,
+            100
+        );
+
+
+    </script>
+
+</body>
+
+</html>
