@@ -2,7 +2,6 @@
 <html lang="pt-br">
 
 <head>
-
 <meta charset="UTF-8">
 
 <meta
@@ -28,7 +27,6 @@ body {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
 }
-
 
 /* =========================
    MENU
@@ -57,7 +55,6 @@ header {
 .logo {
     font-size: 25px;
     font-weight: bold;
-
     color: #00dc50;
 }
 
@@ -69,20 +66,15 @@ nav {
 nav button {
     background: none;
     border: none;
-
     color: #ccc;
-
     font-size: 16px;
-
     cursor: pointer;
-
     transition: 0.2s;
 }
 
 nav button:hover {
     color: #00dc50;
 }
-
 
 /* =========================
    PÁGINAS
@@ -95,7 +87,6 @@ nav button:hover {
 .pagina.ativa {
     display: block;
 }
-
 
 /* =========================
    INÍCIO
@@ -123,7 +114,6 @@ nav button:hover {
 
 .hero h1 {
     font-size: 58px;
-
     margin: 0 0 20px;
 }
 
@@ -133,13 +123,9 @@ nav button:hover {
 
 .hero p {
     color: #aaa;
-
     font-size: 21px;
-
     line-height: 1.7;
-
     max-width: 700px;
-
     margin: auto;
 }
 
@@ -154,11 +140,9 @@ nav button:hover {
     border-radius: 10px;
 
     background: #00c749;
-
     color: white;
 
     font-size: 18px;
-
     font-weight: bold;
 
     cursor: pointer;
@@ -168,10 +152,8 @@ nav button:hover {
 
 .botaoPrincipal:hover {
     background: #00e653;
-
     transform: translateY(-2px);
 }
-
 
 /* =========================
    SOBRE
@@ -179,23 +161,18 @@ nav button:hover {
 
 .sobre {
     max-width: 1100px;
-
     margin: auto;
-
     padding: 70px 30px;
 }
 
 .sobre h2 {
     font-size: 36px;
-
     margin-bottom: 20px;
 }
 
 .sobre p {
     color: #aaa;
-
     font-size: 18px;
-
     line-height: 1.7;
 }
 
@@ -212,7 +189,6 @@ nav button:hover {
 
 .infoCard {
     background: #17171b;
-
     border: 1px solid #29292e;
 
     padding: 25px;
@@ -222,10 +198,8 @@ nav button:hover {
 
 .infoCard h3 {
     color: #00dc50;
-
     margin-top: 0;
 }
-
 
 /* =========================
    PROJETOS
@@ -233,25 +207,21 @@ nav button:hover {
 
 #projetos {
     min-height: calc(100vh - 70px);
-
     padding: 60px 7%;
 }
 
 .tituloPagina {
     text-align: center;
-
     margin-bottom: 50px;
 }
 
 .tituloPagina h1 {
     font-size: 42px;
-
     margin-bottom: 10px;
 }
 
 .tituloPagina p {
     color: #999;
-
     font-size: 18px;
 }
 
@@ -268,7 +238,6 @@ nav button:hover {
 
 .cardProjeto {
     background: #17171b;
-
     border: 1px solid #29292e;
 
     border-radius: 17px;
@@ -280,7 +249,6 @@ nav button:hover {
 
 .cardProjeto:hover {
     transform: translateY(-5px);
-
     border-color: #00b944;
 }
 
@@ -294,7 +262,6 @@ nav button:hover {
 
 .cardProjeto p {
     color: #999;
-
     line-height: 1.5;
 }
 
@@ -319,7 +286,6 @@ nav button:hover {
 .botaoProjeto:hover {
     background: #00df51;
 }
-
 
 /* =========================
    ESCOLHER DISPOSITIVO
@@ -348,9 +314,7 @@ nav button:hover {
 
 .escolhaContainer p {
     color: #aaa;
-
     font-size: 19px;
-
     margin-bottom: 35px;
 }
 
@@ -385,18 +349,14 @@ nav button:hover {
 
 .botaoDispositivo:hover {
     transform: translateY(-5px);
-
     border-color: #00dc50;
 }
 
 .dispositivoIcone {
     display: block;
-
     font-size: 60px;
-
     margin-bottom: 12px;
 }
-
 
 /* =========================
    JOGO
@@ -416,7 +376,6 @@ nav button:hover {
 
 #pontosContainer {
     font-size: 19px;
-
     margin: 10px;
 }
 
@@ -428,21 +387,33 @@ nav button:hover {
     justify-content: center;
 }
 
+/*
+   TAMANHO VISUAL DO JOGO
+
+   A resolução interna continua
+   sendo 1280x720.
+
+   No computador o jogo aparece
+   com no máximo 900px.
+*/
+
 canvas {
     background: #181818;
 
     border: 3px solid white;
 
-    max-width: 95%;
+    width: 900px;
+    max-width: 90%;
 
     height: auto;
 
     touch-action: none;
+
+    border-radius: 8px;
 }
 
 #mensagem {
     font-size: 25px;
-
     margin-top: 15px;
 }
 
@@ -465,7 +436,6 @@ canvas {
 
     cursor: pointer;
 }
-
 
 /* =========================
    CONTROLES MOBILE
@@ -506,11 +476,12 @@ canvas {
     cursor: pointer;
 
     touch-action: manipulation;
+
+    user-select: none;
 }
 
 .controle:active {
     background: #00a73d;
-
     transform: scale(0.94);
 }
 
@@ -540,7 +511,6 @@ canvas {
     cursor: pointer;
 }
 
-
 /* =========================
    RODAPÉ
 ========================= */
@@ -554,7 +524,6 @@ footer {
 
     color: #777;
 }
-
 
 /* =========================
    MOBILE
@@ -597,12 +566,33 @@ footer {
     .botaoDispositivo {
         width: 160px;
         height: 130px;
-
         font-size: 18px;
     }
 
     .dispositivoIcone {
         font-size: 45px;
+    }
+
+    /*
+       No celular o jogo usa
+       praticamente toda a largura.
+    */
+
+    canvas {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #paginaJogo {
+        padding: 8px;
+    }
+
+    #paginaJogo h1 {
+        font-size: 25px;
+    }
+
+    #mensagem {
+        font-size: 20px;
     }
 
 }
@@ -638,7 +628,6 @@ footer {
     </nav>
 
 </header>
-
 
 
 <!-- =========================
@@ -749,7 +738,6 @@ footer {
 </section>
 
 
-
 <!-- =========================
      PROJETOS
 ========================= -->
@@ -773,7 +761,6 @@ footer {
 
 
     <div class="gradeProjetos">
-
 
         <div class="cardProjeto">
 
@@ -801,11 +788,9 @@ footer {
 
         </div>
 
-
     </div>
 
 </section>
-
 
 
 <!-- =========================
@@ -829,7 +814,6 @@ footer {
 
 
         <div class="opcoesDispositivo">
-
 
             <button
                 class="botaoDispositivo"
@@ -858,7 +842,6 @@ footer {
 
             </button>
 
-
         </div>
 
 
@@ -875,7 +858,6 @@ footer {
     </div>
 
 </section>
-
 
 
 <!-- =========================
@@ -922,11 +904,9 @@ footer {
     </button>
 
 
-
     <!-- CONTROLE MOBILE -->
 
     <div id="controlesMobile">
-
 
         <div class="linhaControle">
 
@@ -941,7 +921,6 @@ footer {
 
 
         <div class="linhaControle">
-
 
             <button
                 class="controle"
@@ -966,15 +945,12 @@ footer {
                 ▶
             </button>
 
-
         </div>
-
 
     </div>
 
 
     <div class="botoesJogo">
-
 
         <button
             class="botaoSecundario"
@@ -991,11 +967,9 @@ footer {
             Voltar para projetos
         </button>
 
-
     </div>
 
 </section>
-
 
 
 <script>
@@ -1071,9 +1045,7 @@ function escolherModo(dispositivo) {
     modo =
         dispositivo;
 
-
     esconderPaginas();
-
 
     document
         .getElementById(
@@ -1100,14 +1072,12 @@ function escolherModo(dispositivo) {
 
     iniciarJogo();
 
-
     window.scrollTo(
         0,
         0
     );
 
 }
-
 
 
 /* =========================
@@ -1150,7 +1120,6 @@ const controlesMobile =
     );
 
 
-
 /* TAMANHO DOS QUADRADOS */
 
 const tamanho = 40;
@@ -1190,13 +1159,11 @@ let ultimoMovimento;
 let ultimoFrame = 0;
 
 
-
 /* =========================
    INICIAR
 ========================= */
 
 function iniciarJogo() {
-
 
     cobra = [
 
@@ -1254,13 +1221,11 @@ function iniciarJogo() {
 }
 
 
-
 /* =========================
    COMIDA
 ========================= */
 
 function criarComida() {
-
 
     let x;
 
@@ -1268,7 +1233,6 @@ function criarComida() {
 
 
     do {
-
 
         x =
 
@@ -1289,7 +1253,6 @@ function criarComida() {
             *
 
             tamanho;
-
 
 
         y =
@@ -1315,7 +1278,6 @@ function criarComida() {
 
     } while (
 
-
         cobra.some(
 
             parte =>
@@ -1328,7 +1290,6 @@ function criarComida() {
 
         )
 
-
     );
 
 
@@ -1340,13 +1301,11 @@ function criarComida() {
 }
 
 
-
 /* =========================
    ATUALIZAR
 ========================= */
 
 function atualizar() {
-
 
     if (
         gameOver
@@ -1383,7 +1342,6 @@ function atualizar() {
         ]
 
     };
-
 
 
     if (
@@ -1426,7 +1384,6 @@ function atualizar() {
     }
 
 
-
     /* PAREDE */
 
     if (
@@ -1449,13 +1406,11 @@ function atualizar() {
 
     ) {
 
-
         perder();
 
         return;
 
     }
-
 
 
     /* CORPO */
@@ -1478,7 +1433,6 @@ function atualizar() {
 
     ) {
 
-
         perder();
 
         return;
@@ -1486,11 +1440,9 @@ function atualizar() {
     }
 
 
-
     cobra.push(
         cabeca
     );
-
 
 
     /* COMIDA */
@@ -1507,7 +1459,6 @@ function atualizar() {
 
     ) {
 
-
         pontos++;
 
 
@@ -1520,11 +1471,9 @@ function atualizar() {
 
     } else {
 
-
         cobra.shift();
 
     }
-
 
 
     while (
@@ -1537,7 +1486,6 @@ function atualizar() {
 
     ) {
 
-
         cobraAnterior.unshift({
 
             ...cobraAnterior[0]
@@ -1547,7 +1495,6 @@ function atualizar() {
     }
 
 }
-
 
 
 /* =========================
@@ -1568,7 +1515,6 @@ function interpolar(
 }
 
 
-
 /* =========================
    DESENHAR
 ========================= */
@@ -1576,7 +1522,6 @@ function interpolar(
 function desenhar(
     progresso
 ) {
-
 
     ctx.fillStyle =
         "#181818";
@@ -1591,7 +1536,6 @@ function desenhar(
         canvas.height
 
     );
-
 
 
     /* COMIDA */
@@ -1623,7 +1567,6 @@ function desenhar(
     ctx.fill();
 
 
-
     /* COBRA */
 
     cobra.forEach(
@@ -1645,7 +1588,6 @@ function desenhar(
                 parte;
 
 
-
             const x =
 
                 interpolar(
@@ -1657,7 +1599,6 @@ function desenhar(
                     progresso
 
                 );
-
 
 
             const y =
@@ -1673,12 +1614,10 @@ function desenhar(
                 );
 
 
-
             const cabeca =
 
                 index ===
                 cobra.length - 1;
-
 
 
             if (
@@ -1696,7 +1635,6 @@ function desenhar(
             }
 
 
-
             ctx.fillRect(
 
                 x + 2,
@@ -1708,7 +1646,6 @@ function desenhar(
                 tamanho - 4
 
             );
-
 
 
             if (
@@ -1729,7 +1666,6 @@ function desenhar(
 }
 
 
-
 /* =========================
    ROSTO
 ========================= */
@@ -1739,18 +1675,15 @@ function desenharRosto(
     y
 ) {
 
-
     let olho1;
 
     let olho2;
-
 
 
     if (
         direcao ===
         "direita"
     ) {
-
 
         olho1 = {
 
@@ -1768,7 +1701,6 @@ function desenharRosto(
             y: y + 29
 
         };
-
 
     }
 
@@ -1778,7 +1710,6 @@ function desenharRosto(
         "esquerda"
     ) {
 
-
         olho1 = {
 
             x: x + 11,
@@ -1795,7 +1726,6 @@ function desenharRosto(
             y: y + 29
 
         };
-
 
     }
 
@@ -1805,7 +1735,6 @@ function desenharRosto(
         "cima"
     ) {
 
-
         olho1 = {
 
             x: x + 11,
@@ -1822,14 +1751,12 @@ function desenharRosto(
             y: y + 11
 
         };
-
 
     }
 
 
     else {
 
-
         olho1 = {
 
             x: x + 11,
@@ -1848,7 +1775,6 @@ function desenharRosto(
         };
 
     }
-
 
 
     /* OLHOS */
@@ -1878,7 +1804,6 @@ function desenharRosto(
     ctx.fill();
 
 
-
     ctx.beginPath();
 
 
@@ -1898,7 +1823,6 @@ function desenharRosto(
 
 
     ctx.fill();
-
 
 
     /* PUPILAS */
@@ -1928,7 +1852,6 @@ function desenharRosto(
     ctx.fill();
 
 
-
     ctx.beginPath();
 
 
@@ -1952,7 +1875,6 @@ function desenharRosto(
 }
 
 
-
 /* =========================
    LOOP 30 FPS
 ========================= */
@@ -1960,7 +1882,6 @@ function desenharRosto(
 function loop(
     tempo
 ) {
-
 
     requestAnimationFrame(
         loop
@@ -1982,7 +1903,6 @@ function loop(
     }
 
 
-
     ultimoFrame =
 
         tempo
@@ -2002,7 +1922,6 @@ function loop(
             TEMPO_FRAME
 
         );
-
 
 
     if (
@@ -2027,7 +1946,6 @@ function loop(
     }
 
 
-
     let tempoPassado =
 
         tempo
@@ -2035,7 +1953,6 @@ function loop(
         -
 
         ultimoMovimento;
-
 
 
     if (
@@ -2047,7 +1964,6 @@ function loop(
         TEMPO_MOVIMENTO
 
     ) {
-
 
         atualizar();
 
@@ -2062,7 +1978,6 @@ function loop(
     }
 
 
-
     let progresso =
 
         tempoPassado
@@ -2070,7 +1985,6 @@ function loop(
         /
 
         TEMPO_MOVIMENTO;
-
 
 
     progresso =
@@ -2084,7 +1998,6 @@ function loop(
         );
 
 
-
     desenhar(
         progresso
     );
@@ -2092,13 +2005,11 @@ function loop(
 }
 
 
-
 /* =========================
    PERDER
 ========================= */
 
 function perder() {
-
 
     gameOver =
         true;
@@ -2115,7 +2026,6 @@ function perder() {
 }
 
 
-
 /* =========================
    DIREÇÃO
 ========================= */
@@ -2123,7 +2033,6 @@ function perder() {
 function mudarDirecao(
     nova
 ) {
-
 
     if (
 
@@ -2135,12 +2044,10 @@ function mudarDirecao(
 
     ) {
 
-
         proximaDirecao =
             "esquerda";
 
     }
-
 
 
     if (
@@ -2153,12 +2060,10 @@ function mudarDirecao(
 
     ) {
 
-
         proximaDirecao =
             "direita";
 
     }
-
 
 
     if (
@@ -2171,12 +2076,10 @@ function mudarDirecao(
 
     ) {
 
-
         proximaDirecao =
             "cima";
 
     }
-
 
 
     if (
@@ -2189,14 +2092,12 @@ function mudarDirecao(
 
     ) {
 
-
         proximaDirecao =
             "baixo";
 
     }
 
 }
-
 
 
 /* =========================
@@ -2208,7 +2109,6 @@ document.addEventListener(
     "keydown",
 
     function(evento) {
-
 
         if (
             modo !==
@@ -2275,11 +2175,9 @@ document.addEventListener(
 
         }
 
-
     }
 
 );
-
 
 
 /* =========================
@@ -2362,7 +2260,6 @@ document
 );
 
 
-
 /* =========================
    REINICIAR
 ========================= */
@@ -2377,9 +2274,8 @@ botaoReiniciar
 );
 
 
-
 /* =========================
-   COMEÇAR LOOP
+   COMEÇAR
 ========================= */
 
 requestAnimationFrame(
@@ -2387,7 +2283,6 @@ requestAnimationFrame(
 );
 
 </script>
-
 
 </body>
 
