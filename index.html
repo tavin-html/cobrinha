@@ -2,265 +2,897 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no"
-    >
+<meta charset="UTF-8">
 
-    <title>Jogo da Cobrinha</title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no"
+>
 
-    <style>
+<title>Tavin.site</title>
 
-        * {
-            box-sizing: border-box;
-        }
+<style>
 
-        body {
-            margin: 0;
-            background: #111;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            overflow-x: hidden;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        /* TELA DE ESCOLHA */
+html {
+    scroll-behavior: smooth;
+}
 
-        #telaEscolha {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+body {
+    margin: 0;
+    background: #0d0d0f;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-        #telaEscolha h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
 
-        #telaEscolha p {
-            font-size: 20px;
-            color: #bbb;
-            margin-bottom: 35px;
-        }
+/* =========================
+   MENU
+========================= */
 
-        .opcoes {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+header {
+    width: 100%;
+    height: 70px;
 
-        .botaoModo {
-            width: 220px;
-            height: 150px;
-            border: 2px solid #333;
-            border-radius: 18px;
-            background: #1c1c1c;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-        .botaoModo:hover {
-            transform: scale(1.05);
-            background: #292929;
-            border-color: #00dc50;
-        }
+    padding: 0 7%;
 
-        .icone {
-            display: block;
-            font-size: 55px;
-            margin-bottom: 10px;
-        }
+    background: rgba(15,15,18,0.95);
 
-        /* JOGO */
+    border-bottom: 1px solid #292929;
 
-        #jogoContainer {
-            display: none;
-            padding: 10px;
-        }
+    position: sticky;
+    top: 0;
 
-        h1 {
-            margin-top: 10px;
-            margin-bottom: 5px;
-        }
+    z-index: 100;
+}
 
-        #info {
-            font-size: 20px;
-            margin: 8px;
-        }
+.logo {
+    font-size: 25px;
+    font-weight: bold;
 
-        #canvasContainer {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
+    color: #00dc50;
+}
 
-        canvas {
-            background: #181818;
-            border: 3px solid white;
-            max-width: 95%;
-            height: auto;
-            touch-action: none;
-        }
+nav {
+    display: flex;
+    gap: 30px;
+}
 
-        #mensagem {
-            font-size: 28px;
-            margin-top: 15px;
-        }
+nav button {
+    background: none;
+    border: none;
 
-        /* BOTÕES */
+    color: #ccc;
 
-        button {
-            font-family: Arial;
-            border: none;
-        }
+    font-size: 16px;
 
-        #reiniciar {
-            display: none;
-            margin: 15px auto;
-            padding: 12px 25px;
-            font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            background: #00b947;
-            color: white;
-        }
+    cursor: pointer;
 
-        #trocarModo {
-            margin: 10px;
-            padding: 9px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            background: #333;
-            color: white;
-        }
+    transition: 0.2s;
+}
 
-        /* CONTROLES MOBILE */
+nav button:hover {
+    color: #00dc50;
+}
 
-        #controlesMobile {
-            display: none;
-            margin: 15px auto;
-            width: 230px;
-        }
 
-        .linhaControle {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 8px;
-        }
+/* =========================
+   PÁGINAS
+========================= */
 
-        .controle {
-            width: 68px;
-            height: 68px;
-            border-radius: 15px;
-            background: #2b2b2b;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-            user-select: none;
-            touch-action: manipulation;
-        }
+.pagina {
+    display: none;
+}
 
-        .controle:active {
-            background: #00a83e;
-            transform: scale(0.93);
-        }
+.pagina.ativa {
+    display: block;
+}
 
-        /* CELULAR */
 
-        @media (max-width: 700px) {
+/* =========================
+   INÍCIO
+========================= */
 
-            #telaEscolha h1 {
-                font-size: 32px;
-            }
+#inicio {
+    min-height: calc(100vh - 70px);
+}
 
-            .botaoModo {
-                width: 160px;
-                height: 120px;
-                font-size: 19px;
-            }
+.hero {
+    min-height: 600px;
 
-            .icone {
-                font-size: 42px;
-            }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            #tituloJogo {
-                font-size: 25px;
-            }
+    text-align: center;
 
-            #mensagem {
-                font-size: 20px;
-            }
+    padding: 40px 20px;
+}
 
-        }
+.heroConteudo {
+    max-width: 850px;
+}
 
-    </style>
+.hero h1 {
+    font-size: 58px;
+
+    margin: 0 0 20px;
+}
+
+.hero h1 span {
+    color: #00dc50;
+}
+
+.hero p {
+    color: #aaa;
+
+    font-size: 21px;
+
+    line-height: 1.7;
+
+    max-width: 700px;
+
+    margin: auto;
+}
+
+.botaoPrincipal {
+    display: inline-block;
+
+    margin-top: 35px;
+
+    padding: 15px 30px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #00c749;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.botaoPrincipal:hover {
+    background: #00e653;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   SOBRE
+========================= */
+
+.sobre {
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 70px 30px;
+}
+
+.sobre h2 {
+    font-size: 36px;
+
+    margin-bottom: 20px;
+}
+
+.sobre p {
+    color: #aaa;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+}
+
+.infos {
+    margin-top: 40px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 20px;
+}
+
+.infoCard {
+    background: #17171b;
+
+    border: 1px solid #29292e;
+
+    padding: 25px;
+
+    border-radius: 15px;
+}
+
+.infoCard h3 {
+    color: #00dc50;
+
+    margin-top: 0;
+}
+
+
+/* =========================
+   PROJETOS
+========================= */
+
+#projetos {
+    min-height: calc(100vh - 70px);
+
+    padding: 60px 7%;
+}
+
+.tituloPagina {
+    text-align: center;
+
+    margin-bottom: 50px;
+}
+
+.tituloPagina h1 {
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+.tituloPagina p {
+    color: #999;
+
+    font-size: 18px;
+}
+
+.gradeProjetos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 350px));
+
+    justify-content: center;
+
+    gap: 25px;
+}
+
+.cardProjeto {
+    background: #17171b;
+
+    border: 1px solid #29292e;
+
+    border-radius: 17px;
+
+    padding: 30px;
+
+    transition: 0.25s;
+}
+
+.cardProjeto:hover {
+    transform: translateY(-5px);
+
+    border-color: #00b944;
+}
+
+.iconeProjeto {
+    font-size: 50px;
+}
+
+.cardProjeto h2 {
+    margin-bottom: 10px;
+}
+
+.cardProjeto p {
+    color: #999;
+
+    line-height: 1.5;
+}
+
+.botaoProjeto {
+    margin-top: 15px;
+
+    padding: 12px 20px;
+
+    background: #00bd45;
+
+    border: none;
+
+    color: white;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.botaoProjeto:hover {
+    background: #00df51;
+}
+
+
+/* =========================
+   ESCOLHER DISPOSITIVO
+========================= */
+
+#escolherDispositivo {
+    min-height: calc(100vh - 70px);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+#escolherDispositivo.ativa {
+    display: flex;
+}
+
+.escolhaContainer h1 {
+    font-size: 42px;
+}
+
+.escolhaContainer p {
+    color: #aaa;
+
+    font-size: 19px;
+
+    margin-bottom: 35px;
+}
+
+.opcoesDispositivo {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+.botaoDispositivo {
+    width: 230px;
+    height: 160px;
+
+    border: 2px solid #29292e;
+
+    background: #17171b;
+
+    border-radius: 18px;
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.botaoDispositivo:hover {
+    transform: translateY(-5px);
+
+    border-color: #00dc50;
+}
+
+.dispositivoIcone {
+    display: block;
+
+    font-size: 60px;
+
+    margin-bottom: 12px;
+}
+
+
+/* =========================
+   JOGO
+========================= */
+
+#paginaJogo {
+    min-height: calc(100vh - 70px);
+
+    text-align: center;
+
+    padding: 15px;
+}
+
+#paginaJogo h1 {
+    margin: 10px;
+}
+
+#pontosContainer {
+    font-size: 19px;
+
+    margin: 10px;
+}
+
+#canvasContainer {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+canvas {
+    background: #181818;
+
+    border: 3px solid white;
+
+    max-width: 95%;
+
+    height: auto;
+
+    touch-action: none;
+}
+
+#mensagem {
+    font-size: 25px;
+
+    margin-top: 15px;
+}
+
+#reiniciar {
+    display: none;
+
+    margin: 15px auto;
+
+    padding: 12px 25px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #00bd45;
+
+    color: white;
+
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   CONTROLES MOBILE
+========================= */
+
+#controlesMobile {
+    display: none;
+
+    width: 250px;
+
+    margin: 20px auto;
+}
+
+.linhaControle {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin: 8px;
+}
+
+.controle {
+    width: 70px;
+    height: 70px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: #28282d;
+
+    color: white;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+}
+
+.controle:active {
+    background: #00a73d;
+
+    transform: scale(0.94);
+}
+
+.botoesJogo {
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.botaoSecundario {
+    padding: 10px 18px;
+
+    background: #29292e;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   RODAPÉ
+========================= */
+
+footer {
+    text-align: center;
+
+    padding: 30px;
+
+    border-top: 1px solid #292929;
+
+    color: #777;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    header {
+        padding: 0 20px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    nav {
+        gap: 12px;
+    }
+
+    nav button {
+        font-size: 14px;
+    }
+
+    .hero {
+        min-height: 500px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero p {
+        font-size: 17px;
+    }
+
+    .escolhaContainer h1 {
+        font-size: 30px;
+    }
+
+    .botaoDispositivo {
+        width: 160px;
+        height: 130px;
+
+        font-size: 18px;
+    }
+
+    .dispositivoIcone {
+        font-size: 45px;
+    }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-<!-- TELA DE ESCOLHA -->
 
-<div id="telaEscolha">
+<!-- =========================
+     MENU
+========================= -->
+
+<header>
+
+    <div class="logo">
+        TAVIN.SITE
+    </div>
+
+    <nav>
+
+        <button onclick="abrirPagina('inicio')">
+            Início
+        </button>
+
+        <button onclick="abrirPagina('projetos')">
+            Projetos
+        </button>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================
+     INÍCIO
+========================= -->
+
+<section
+    id="inicio"
+    class="pagina ativa"
+>
+
+    <div class="hero">
+
+        <div class="heroConteudo">
+
+            <h1>
+                Bem-vindo ao
+                <span>Tavin.site</span>
+            </h1>
+
+            <p>
+                Este é um espaço onde eu publico
+                meus projetos, jogos e experiências
+                que estou criando enquanto aprendo
+                programação e desenvolvimento web.
+            </p>
+
+            <button
+                class="botaoPrincipal"
+                onclick="abrirPagina('projetos')"
+            >
+                Ver meus projetos
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="sobre">
+
+        <h2>
+            Sobre o site
+        </h2>
+
+        <p>
+            O Tavin.site foi criado para reunir
+            meus projetos em um único lugar.
+            Aqui você poderá encontrar jogos,
+            páginas, experiências e outros
+            projetos que eu criar no futuro.
+        </p>
+
+
+        <div class="infos">
+
+            <div class="infoCard">
+
+                <h3>
+                    🎮 Jogos
+                </h3>
+
+                <p>
+                    Jogos feitos diretamente
+                    para funcionar no navegador.
+                </p>
+
+            </div>
+
+
+            <div class="infoCard">
+
+                <h3>
+                    💻 Projetos
+                </h3>
+
+                <p>
+                    Projetos de programação,
+                    sites e experiências.
+                </p>
+
+            </div>
+
+
+            <div class="infoCard">
+
+                <h3>
+                    🚀 Em evolução
+                </h3>
+
+                <p>
+                    O site continuará recebendo
+                    novidades conforme novos
+                    projetos forem criados.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        Tavin.site • Projetos e jogos
+    </footer>
+
+</section>
+
+
+
+<!-- =========================
+     PROJETOS
+========================= -->
+
+<section
+    id="projetos"
+    class="pagina"
+>
+
+    <div class="tituloPagina">
+
+        <h1>
+            Projetos
+        </h1>
+
+        <p>
+            Veja os projetos disponíveis no site.
+        </p>
+
+    </div>
+
+
+    <div class="gradeProjetos">
+
+
+        <div class="cardProjeto">
+
+            <div class="iconeProjeto">
+                🐍
+            </div>
+
+            <h2>
+                Jogo da Cobrinha
+            </h2>
+
+            <p>
+                Jogo clássico da cobrinha feito
+                em HTML, CSS e JavaScript.
+                Disponível para computador
+                e celular.
+            </p>
+
+            <button
+                class="botaoProjeto"
+                onclick="abrirEscolha()"
+            >
+                Jogar
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     ESCOLHER PC OU CELULAR
+========================= -->
+
+<section
+    id="escolherDispositivo"
+    class="pagina"
+>
+
+    <div class="escolhaContainer">
+
+        <h1>
+            🐍 Jogo da Cobrinha
+        </h1>
+
+        <p>
+            Escolha como você vai jogar.
+        </p>
+
+
+        <div class="opcoesDispositivo">
+
+
+            <button
+                class="botaoDispositivo"
+                onclick="escolherModo('computador')"
+            >
+
+                <span class="dispositivoIcone">
+                    💻
+                </span>
+
+                Computador
+
+            </button>
+
+
+            <button
+                class="botaoDispositivo"
+                onclick="escolherModo('celular')"
+            >
+
+                <span class="dispositivoIcone">
+                    📱
+                </span>
+
+                Celular
+
+            </button>
+
+
+        </div>
+
+
+        <br><br>
+
+
+        <button
+            class="botaoSecundario"
+            onclick="abrirPagina('projetos')"
+        >
+            ← Voltar para projetos
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     JOGO
+========================= -->
+
+<section
+    id="paginaJogo"
+    class="pagina"
+>
 
     <h1>
         🐍 Jogo da Cobrinha
     </h1>
 
-    <p>
-        Como você vai jogar?
-    </p>
 
-    <div class="opcoes">
-
-        <button
-            class="botaoModo"
-            onclick="escolherModo('computador')"
-        >
-
-            <span class="icone">
-                💻
-            </span>
-
-            Computador
-
-        </button>
-
-        <button
-            class="botaoModo"
-            onclick="escolherModo('celular')"
-        >
-
-            <span class="icone">
-                📱
-            </span>
-
-            Celular
-
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- JOGO -->
-
-<div id="jogoContainer">
-
-    <h1 id="tituloJogo">
-        🐍 Jogo da Cobrinha
-    </h1>
-
-    <div id="info">
+    <div id="pontosContainer">
 
         Pontos:
 
@@ -269,6 +901,7 @@
         </span>
 
     </div>
+
 
     <div id="canvasContainer">
 
@@ -280,16 +913,20 @@
 
     </div>
 
+
     <div id="mensagem"></div>
+
 
     <button id="reiniciar">
         Tentar novamente
     </button>
 
 
-    <!-- CONTROLES DO CELULAR -->
+
+    <!-- CONTROLE MOBILE -->
 
     <div id="controlesMobile">
+
 
         <div class="linhaControle">
 
@@ -302,7 +939,9 @@
 
         </div>
 
+
         <div class="linhaControle">
+
 
             <button
                 class="controle"
@@ -311,12 +950,14 @@
                 ◀
             </button>
 
+
             <button
                 class="controle"
                 id="baixo"
             >
                 ▼
             </button>
+
 
             <button
                 class="controle"
@@ -325,59 +966,210 @@
                 ▶
             </button>
 
+
         </div>
+
 
     </div>
 
-    <button id="trocarModo">
-        Voltar
-    </button>
 
-</div>
+    <div class="botoesJogo">
+
+
+        <button
+            class="botaoSecundario"
+            onclick="abrirEscolha()"
+        >
+            Trocar dispositivo
+        </button>
+
+
+        <button
+            class="botaoSecundario"
+            onclick="abrirPagina('projetos')"
+        >
+            Voltar para projetos
+        </button>
+
+
+    </div>
+
+</section>
+
 
 
 <script>
 
+/* =========================
+   SISTEMA DO SITE
+========================= */
+
+let modo = "";
+
+
+function esconderPaginas() {
+
+    document
+        .querySelectorAll(".pagina")
+        .forEach(
+
+            pagina => {
+
+                pagina.classList.remove(
+                    "ativa"
+                );
+
+            }
+
+        );
+
+}
+
+
+function abrirPagina(id) {
+
+    esconderPaginas();
+
+    document
+        .getElementById(id)
+        .classList
+        .add("ativa");
+
+    modo = "";
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+function abrirEscolha() {
+
+    esconderPaginas();
+
+    document
+        .getElementById(
+            "escolherDispositivo"
+        )
+        .classList
+        .add("ativa");
+
+    modo = "";
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+function escolherModo(dispositivo) {
+
+    modo =
+        dispositivo;
+
+
+    esconderPaginas();
+
+
+    document
+        .getElementById(
+            "paginaJogo"
+        )
+        .classList
+        .add("ativa");
+
+
+    if (
+        modo === "celular"
+    ) {
+
+        controlesMobile.style.display =
+            "block";
+
+    } else {
+
+        controlesMobile.style.display =
+            "none";
+
+    }
+
+
+    iniciarJogo();
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+
+/* =========================
+   JOGO
+========================= */
+
 const canvas =
-    document.getElementById("jogo");
+    document.getElementById(
+        "jogo"
+    );
+
 
 const ctx =
-    canvas.getContext("2d");
+    canvas.getContext(
+        "2d"
+    );
+
 
 const pontosTexto =
-    document.getElementById("pontos");
+    document.getElementById(
+        "pontos"
+    );
+
 
 const mensagem =
-    document.getElementById("mensagem");
+    document.getElementById(
+        "mensagem"
+    );
+
 
 const botaoReiniciar =
-    document.getElementById("reiniciar");
+    document.getElementById(
+        "reiniciar"
+    );
+
 
 const controlesMobile =
-    document.getElementById("controlesMobile");
-
-const telaEscolha =
-    document.getElementById("telaEscolha");
-
-const jogoContainer =
-    document.getElementById("jogoContainer");
+    document.getElementById(
+        "controlesMobile"
+    );
 
 
-/* CONFIGURAÇÕES */
+
+/* TAMANHO DOS QUADRADOS */
 
 const tamanho = 40;
 
-/* VELOCIDADE DA COBRA */
+
+/* VELOCIDADE DA COBRINHA */
+
 const TEMPO_MOVIMENTO = 170;
 
+
 /* FPS */
+
 const FPS = 30;
+
 
 const TEMPO_FRAME =
     1000 / FPS;
 
 
-/* VARIÁVEIS */
 
 let cobra;
 
@@ -393,114 +1185,152 @@ let pontos;
 
 let gameOver;
 
-let modo = "";
-
 let ultimoMovimento;
 
 let ultimoFrame = 0;
 
 
-/* ESCOLHER MODO */
 
-function escolherModo(dispositivo) {
-
-    modo = dispositivo;
-
-    telaEscolha.style.display =
-        "none";
-
-    jogoContainer.style.display =
-        "block";
-
-    if (modo === "celular") {
-
-        controlesMobile.style.display =
-            "block";
-
-    } else {
-
-        controlesMobile.style.display =
-            "none";
-
-    }
-
-    iniciarJogo();
-
-}
-
-
-/* INICIAR JOGO */
+/* =========================
+   INICIAR
+========================= */
 
 function iniciarJogo() {
 
+
     cobra = [
+
         {
             x: 600,
             y: 360
         }
+
     ];
+
 
     cobraAnterior = [
+
         {
             x: 600,
             y: 360
         }
+
     ];
 
-    direcao = "direita";
 
-    proximaDirecao = "direita";
+    direcao =
+        "direita";
+
+
+    proximaDirecao =
+        "direita";
+
 
     pontos = 0;
 
-    gameOver = false;
 
-    mensagem.textContent = "";
+    gameOver =
+        false;
+
+
+    mensagem.textContent =
+        "";
+
 
     botaoReiniciar.style.display =
         "none";
 
+
     pontosTexto.textContent =
         pontos;
 
+
     ultimoMovimento =
         performance.now();
+
 
     criarComida();
 
 }
 
 
-/* CRIAR COMIDA */
+
+/* =========================
+   COMIDA
+========================= */
 
 function criarComida() {
 
+
     let x;
+
     let y;
+
 
     do {
 
+
         x =
+
             Math.floor(
-                Math.random() *
-                (canvas.width / tamanho)
-            ) * tamanho;
+
+                Math.random()
+
+                *
+
+                (
+                    canvas.width
+                    /
+                    tamanho
+                )
+
+            )
+
+            *
+
+            tamanho;
+
+
 
         y =
+
             Math.floor(
-                Math.random() *
-                (canvas.height / tamanho)
-            ) * tamanho;
+
+                Math.random()
+
+                *
+
+                (
+                    canvas.height
+                    /
+                    tamanho
+                )
+
+            )
+
+            *
+
+            tamanho;
+
 
     } while (
 
+
         cobra.some(
+
             parte =>
-                parte.x === x &&
+
+                parte.x === x
+
+                &&
+
                 parte.y === y
+
         )
 
+
     );
+
 
     comida = {
         x,
@@ -510,30 +1340,50 @@ function criarComida() {
 }
 
 
-/* ATUALIZAR JOGO */
+
+/* =========================
+   ATUALIZAR
+========================= */
 
 function atualizar() {
 
-    if (gameOver) {
+
+    if (
+        gameOver
+    ) {
+
         return;
+
     }
+
 
     direcao =
         proximaDirecao;
 
+
     cobraAnterior =
+
         cobra.map(
+
             parte => ({
+
                 x: parte.x,
+
                 y: parte.y
+
             })
+
         );
 
+
     const cabeca = {
+
         ...cobra[
             cobra.length - 1
         ]
+
     };
+
 
 
     if (
@@ -576,35 +1426,65 @@ function atualizar() {
     }
 
 
+
     /* PAREDE */
 
     if (
-        cabeca.x < 0 ||
-        cabeca.x >= canvas.width ||
-        cabeca.y < 0 ||
-        cabeca.y >= canvas.height
+
+        cabeca.x < 0
+
+        ||
+
+        cabeca.x >=
+        canvas.width
+
+        ||
+
+        cabeca.y < 0
+
+        ||
+
+        cabeca.y >=
+        canvas.height
+
     ) {
+
 
         perder();
 
         return;
+
     }
+
 
 
     /* CORPO */
 
     if (
+
         cobra.some(
+
             parte =>
-                parte.x === cabeca.x &&
-                parte.y === cabeca.y
+
+                parte.x ===
+                cabeca.x
+
+                &&
+
+                parte.y ===
+                cabeca.y
+
         )
+
     ) {
+
 
         perder();
 
         return;
+
     }
+
 
 
     cobra.push(
@@ -612,34 +1492,56 @@ function atualizar() {
     );
 
 
+
     /* COMIDA */
 
     if (
-        cabeca.x === comida.x &&
-        cabeca.y === comida.y
+
+        cabeca.x ===
+        comida.x
+
+        &&
+
+        cabeca.y ===
+        comida.y
+
     ) {
 
+
         pontos++;
+
 
         pontosTexto.textContent =
             pontos;
 
+
         criarComida();
 
+
     } else {
+
 
         cobra.shift();
 
     }
 
 
+
     while (
-        cobraAnterior.length <
+
+        cobraAnterior.length
+
+        <
+
         cobra.length
+
     ) {
 
+
         cobraAnterior.unshift({
+
             ...cobraAnterior[0]
+
         });
 
     }
@@ -647,7 +1549,10 @@ function atualizar() {
 }
 
 
-/* INTERPOLAÇÃO */
+
+/* =========================
+   INTERPOLAÇÃO
+========================= */
 
 function interpolar(
     inicio,
@@ -656,27 +1561,37 @@ function interpolar(
 ) {
 
     return inicio +
-        (fim - inicio) *
+        (fim - inicio)
+        *
         progresso;
 
 }
 
 
-/* DESENHAR */
+
+/* =========================
+   DESENHAR
+========================= */
 
 function desenhar(
     progresso
 ) {
 
+
     ctx.fillStyle =
         "#181818";
 
+
     ctx.fillRect(
+
         0,
         0,
+
         canvas.width,
         canvas.height
+
     );
+
 
 
     /* COMIDA */
@@ -684,48 +1599,91 @@ function desenhar(
     ctx.fillStyle =
         "#e63c3c";
 
+
     ctx.beginPath();
 
+
     ctx.arc(
-        comida.x + tamanho / 2,
-        comida.y + tamanho / 2,
+
+        comida.x +
+        tamanho / 2,
+
+        comida.y +
+        tamanho / 2,
+
         16,
+
         0,
+
         Math.PI * 2
+
     );
 
+
     ctx.fill();
+
 
 
     /* COBRA */
 
     cobra.forEach(
-        (parte, index) => {
+
+        (
+            parte,
+            index
+        ) => {
+
 
             const anterior =
-                cobraAnterior[index]
-                || parte;
+
+                cobraAnterior[
+                    index
+                ]
+
+                ||
+
+                parte;
+
+
 
             const x =
+
                 interpolar(
+
                     anterior.x,
+
                     parte.x,
+
                     progresso
+
                 );
+
+
 
             const y =
+
                 interpolar(
+
                     anterior.y,
+
                     parte.y,
+
                     progresso
+
                 );
 
+
+
             const cabeca =
+
                 index ===
                 cobra.length - 1;
 
 
-            if (cabeca) {
+
+            if (
+                cabeca
+            ) {
 
                 ctx.fillStyle =
                     "#00dc50";
@@ -738,15 +1696,24 @@ function desenhar(
             }
 
 
+
             ctx.fillRect(
+
                 x + 2,
+
                 y + 2,
+
                 tamanho - 4,
+
                 tamanho - 4
+
             );
 
 
-            if (cabeca) {
+
+            if (
+                cabeca
+            ) {
 
                 desenharRosto(
                     x,
@@ -756,20 +1723,27 @@ function desenhar(
             }
 
         }
+
     );
 
 }
 
 
-/* ROSTO */
+
+/* =========================
+   ROSTO
+========================= */
 
 function desenharRosto(
     x,
     y
 ) {
 
+
     let olho1;
+
     let olho2;
+
 
 
     if (
@@ -777,96 +1751,154 @@ function desenharRosto(
         "direita"
     ) {
 
+
         olho1 = {
+
             x: x + 29,
+
             y: y + 11
+
         };
+
 
         olho2 = {
+
             x: x + 29,
+
             y: y + 29
+
         };
 
+
     }
+
 
     else if (
         direcao ===
         "esquerda"
     ) {
 
+
         olho1 = {
+
             x: x + 11,
+
             y: y + 11
+
         };
+
 
         olho2 = {
+
             x: x + 11,
+
             y: y + 29
+
         };
 
+
     }
+
 
     else if (
         direcao ===
         "cima"
     ) {
 
+
         olho1 = {
+
             x: x + 11,
+
             y: y + 11
+
         };
+
 
         olho2 = {
+
             x: x + 29,
+
             y: y + 11
+
         };
 
+
     }
+
 
     else {
 
+
         olho1 = {
+
             x: x + 11,
+
             y: y + 29
+
         };
 
+
         olho2 = {
+
             x: x + 29,
+
             y: y + 29
+
         };
 
     }
 
 
-    /* PARTE BRANCA */
+
+    /* OLHOS */
 
     ctx.fillStyle =
         "white";
 
+
     ctx.beginPath();
 
+
     ctx.arc(
+
         olho1.x,
+
         olho1.y,
+
         7,
+
         0,
+
         Math.PI * 2
+
     );
 
+
     ctx.fill();
+
 
 
     ctx.beginPath();
 
+
     ctx.arc(
+
         olho2.x,
+
         olho2.y,
+
         7,
+
         0,
+
         Math.PI * 2
+
     );
 
+
     ctx.fill();
+
 
 
     /* PUPILAS */
@@ -874,39 +1906,61 @@ function desenharRosto(
     ctx.fillStyle =
         "black";
 
+
     ctx.beginPath();
 
+
     ctx.arc(
+
         olho1.x,
+
         olho1.y,
+
         4,
+
         0,
+
         Math.PI * 2
+
     );
+
 
     ctx.fill();
 
 
+
     ctx.beginPath();
 
+
     ctx.arc(
+
         olho2.x,
+
         olho2.y,
+
         4,
+
         0,
+
         Math.PI * 2
+
     );
+
 
     ctx.fill();
 
 }
 
 
-/* LOOP DO JOGO */
+
+/* =========================
+   LOOP 30 FPS
+========================= */
 
 function loop(
     tempo
 ) {
+
 
     requestAnimationFrame(
         loop
@@ -914,26 +1968,58 @@ function loop(
 
 
     if (
-        tempo - ultimoFrame <
+
+        tempo - ultimoFrame
+
+        <
+
         TEMPO_FRAME
+
     ) {
 
         return;
 
     }
+
 
 
     ultimoFrame =
-        tempo -
+
+        tempo
+
+        -
+
         (
-            (tempo - ultimoFrame)
+
+            (
+                tempo
+                -
+                ultimoFrame
+            )
+
             %
+
             TEMPO_FRAME
+
         );
 
 
+
     if (
+
         modo === ""
+
+        ||
+
+        !document
+            .getElementById(
+                "paginaJogo"
+            )
+            .classList
+            .contains(
+                "ativa"
+            )
+
     ) {
 
         return;
@@ -941,20 +2027,34 @@ function loop(
     }
 
 
+
     let tempoPassado =
-        tempo -
+
+        tempo
+
+        -
+
         ultimoMovimento;
 
 
+
     if (
-        tempoPassado >=
+
+        tempoPassado
+
+        >=
+
         TEMPO_MOVIMENTO
+
     ) {
+
 
         atualizar();
 
+
         ultimoMovimento =
             tempo;
+
 
         tempoPassado =
             0;
@@ -962,16 +2062,27 @@ function loop(
     }
 
 
+
     let progresso =
-        tempoPassado /
+
+        tempoPassado
+
+        /
+
         TEMPO_MOVIMENTO;
 
 
+
     progresso =
+
         Math.min(
+
             progresso,
+
             1
+
         );
+
 
 
     desenhar(
@@ -981,15 +2092,22 @@ function loop(
 }
 
 
-/* PERDER */
+
+/* =========================
+   PERDER
+========================= */
 
 function perder() {
+
 
     gameOver =
         true;
 
+
     mensagem.textContent =
+
         "Você perdeu! Tente novamente.";
+
 
     botaoReiniciar.style.display =
         "inline-block";
@@ -997,16 +2115,26 @@ function perder() {
 }
 
 
-/* MUDAR DIREÇÃO */
+
+/* =========================
+   DIREÇÃO
+========================= */
 
 function mudarDirecao(
     nova
 ) {
 
+
     if (
-        nova === "esquerda" &&
+
+        nova === "esquerda"
+
+        &&
+
         direcao !== "direita"
+
     ) {
+
 
         proximaDirecao =
             "esquerda";
@@ -1014,10 +2142,17 @@ function mudarDirecao(
     }
 
 
+
     if (
-        nova === "direita" &&
+
+        nova === "direita"
+
+        &&
+
         direcao !== "esquerda"
+
     ) {
+
 
         proximaDirecao =
             "direita";
@@ -1025,10 +2160,17 @@ function mudarDirecao(
     }
 
 
+
     if (
-        nova === "cima" &&
+
+        nova === "cima"
+
+        &&
+
         direcao !== "baixo"
+
     ) {
+
 
         proximaDirecao =
             "cima";
@@ -1036,10 +2178,17 @@ function mudarDirecao(
     }
 
 
+
     if (
-        nova === "baixo" &&
+
+        nova === "baixo"
+
+        &&
+
         direcao !== "cima"
+
     ) {
+
 
         proximaDirecao =
             "baixo";
@@ -1049,11 +2198,17 @@ function mudarDirecao(
 }
 
 
-/* TECLADO */
+
+/* =========================
+   TECLADO
+========================= */
 
 document.addEventListener(
+
     "keydown",
+
     function(evento) {
+
 
         if (
             modo !==
@@ -1070,6 +2225,8 @@ document.addEventListener(
             "ArrowLeft"
         ) {
 
+            evento.preventDefault();
+
             mudarDirecao(
                 "esquerda"
             );
@@ -1081,6 +2238,8 @@ document.addEventListener(
             evento.key ===
             "ArrowRight"
         ) {
+
+            evento.preventDefault();
 
             mudarDirecao(
                 "direita"
@@ -1094,6 +2253,8 @@ document.addEventListener(
             "ArrowUp"
         ) {
 
+            evento.preventDefault();
+
             mudarDirecao(
                 "cima"
             );
@@ -1106,103 +2267,120 @@ document.addEventListener(
             "ArrowDown"
         ) {
 
+            evento.preventDefault();
+
             mudarDirecao(
                 "baixo"
             );
 
         }
+
 
     }
+
 );
 
 
-/* BOTÕES DO CELULAR */
+
+/* =========================
+   BOTÕES MOBILE
+========================= */
 
 document
-    .getElementById("cima")
-    .addEventListener(
-        "pointerdown",
-        function() {
+.getElementById(
+    "cima"
+)
+.addEventListener(
 
-            mudarDirecao(
-                "cima"
-            );
+    "pointerdown",
 
-        }
-    );
+    function() {
 
+        mudarDirecao(
+            "cima"
+        );
 
-document
-    .getElementById("baixo")
-    .addEventListener(
-        "pointerdown",
-        function() {
+    }
 
-            mudarDirecao(
-                "baixo"
-            );
-
-        }
-    );
+);
 
 
 document
-    .getElementById("esquerda")
-    .addEventListener(
-        "pointerdown",
-        function() {
+.getElementById(
+    "baixo"
+)
+.addEventListener(
 
-            mudarDirecao(
-                "esquerda"
-            );
+    "pointerdown",
 
-        }
-    );
+    function() {
+
+        mudarDirecao(
+            "baixo"
+        );
+
+    }
+
+);
 
 
 document
-    .getElementById("direita")
-    .addEventListener(
-        "pointerdown",
-        function() {
+.getElementById(
+    "esquerda"
+)
+.addEventListener(
 
-            mudarDirecao(
-                "direita"
-            );
+    "pointerdown",
 
-        }
-    );
+    function() {
+
+        mudarDirecao(
+            "esquerda"
+        );
+
+    }
+
+);
 
 
-/* REINICIAR */
+document
+.getElementById(
+    "direita"
+)
+.addEventListener(
 
-botaoReiniciar.addEventListener(
+    "pointerdown",
+
+    function() {
+
+        mudarDirecao(
+            "direita"
+        );
+
+    }
+
+);
+
+
+
+/* =========================
+   REINICIAR
+========================= */
+
+botaoReiniciar
+.addEventListener(
+
     "click",
+
     iniciarJogo
+
 );
 
 
-/* VOLTAR */
 
-document
-    .getElementById("trocarModo")
-    .addEventListener(
-        "click",
-        function() {
-
-            modo = "";
-
-            jogoContainer.style.display =
-                "none";
-
-            telaEscolha.style.display =
-                "flex";
-
-        }
-    );
-
-
-/* COMEÇAR LOOP */
+/* =========================
+   COMEÇAR LOOP
+========================= */
 
 requestAnimationFrame(
     loop
@@ -1210,5 +2388,7 @@ requestAnimationFrame(
 
 </script>
 
+
 </body>
+
 </html>
