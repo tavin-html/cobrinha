@@ -1,426 +1,202 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tavin.site</title>
 
-    <title>Jogo da Cobrinha</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-    <style>
-        body {
-            margin: 0;
-            background: #111;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
+    body {
+      background: #0d1117;
+      color: white;
+    }
 
-        h1 {
-            margin-top: 20px;
-        }
+    header {
+      padding: 25px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #30363d;
+    }
 
-        canvas {
-            background: #181818;
-            border: 3px solid white;
-            max-width: 95%;
-            height: auto;
-        }
+    header h1 {
+      font-size: 28px;
+    }
 
-        #mensagem {
-            font-size: 28px;
-            margin-top: 15px;
-        }
+    nav a {
+      color: #c9d1d9;
+      text-decoration: none;
+      margin-left: 25px;
+    }
 
-        button {
-            margin-top: 10px;
-            padding: 12px 25px;
-            font-size: 18px;
-            cursor: pointer;
-            display: none;
-        }
-    </style>
+    nav a:hover {
+      color: white;
+    }
+
+    .inicio {
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .inicio h2 {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .inicio p {
+      color: #8b949e;
+      font-size: 20px;
+      max-width: 650px;
+    }
+
+    .projetos {
+      padding: 60px 8%;
+    }
+
+    .projetos h2 {
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 15px;
+      padding: 25px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #8b949e;
+      margin-bottom: 20px;
+    }
+
+    .botao {
+      display: inline-block;
+      background: #238636;
+      color: white;
+      padding: 10px 18px;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .botao:hover {
+      background: #2ea043;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #8b949e;
+      border-top: 1px solid #30363d;
+    }
+  </style>
 </head>
 
 <body>
 
-    <h1>🐍 Jogo da Cobrinha</h1>
+<header>
+  <h1>TAVIN.SITE</h1>
 
-    <p>Pontos: <span id="pontos">0</span></p>
+  <nav>
+    <a href="/">Início</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#sobre">Sobre</a>
+  </nav>
+</header>
 
-    <canvas id="jogo" width="1280" height="720"></canvas>
+<section class="inicio">
+  <h2>Bem-vindo ao Tavin.site</h2>
 
-    <div id="mensagem"></div>
+  <p>
+    Aqui eu publico meus jogos, sites, programas
+    e outros projetos que estou criando.
+  </p>
+</section>
 
-    <button id="reiniciar">Tentar novamente</button>
+<section class="projetos" id="projetos">
 
-    <script>
-        const canvas = document.getElementById("jogo");
-        const ctx = canvas.getContext("2d");
+  <h2>Meus projetos</h2>
 
-        const pontosTexto = document.getElementById("pontos");
-        const mensagem = document.getElementById("mensagem");
-        const botaoReiniciar = document.getElementById("reiniciar");
+  <div class="cards">
 
-        const tamanho = 40;
+    <div class="card">
+      <h3>🐍 Jogo da Cobrinha</h3>
 
-        let cobra;
-        let direcao;
-        let proximaDirecao;
-        let comida;
-        let pontos;
-        let gameOver;
+      <p>
+        Um jogo da cobrinha feito para navegador.
+      </p>
 
-        function iniciarJogo() {
+      <a class="botao" href="/jogos/cobrinha/">
+        Jogar
+      </a>
+    </div>
 
-            cobra = [
-                { x: 600, y: 360 }
-            ];
+    <div class="card">
+      <h3>🧮 Calculadora</h3>
 
-            direcao = "direita";
-            proximaDirecao = "direita";
+      <p>
+        Projeto de calculadora que estou desenvolvendo.
+      </p>
 
-            pontos = 0;
+      <a class="botao" href="#">
+        Em breve
+      </a>
+    </div>
 
-            gameOver = false;
+    <div class="card">
+      <h3>💻 Próximo projeto</h3>
 
-            mensagem.textContent = "";
+      <p>
+        Espaço para o próximo projeto.
+      </p>
 
-            botaoReiniciar.style.display = "none";
+      <a class="botao" href="#">
+        Em breve
+      </a>
+    </div>
 
-            pontosTexto.textContent = pontos;
+  </div>
 
-            criarComida();
-        }
+</section>
 
+<section class="projetos" id="sobre">
 
-        function criarComida() {
+  <h2>Sobre</h2>
 
-            let x;
-            let y;
+  <div class="card">
+    <p>
+      Este site é onde eu publico os projetos que faço
+      enquanto aprendo programação.
+    </p>
+  </div>
 
-            do {
+</section>
 
-                x = Math.floor(Math.random() * (canvas.width / tamanho)) * tamanho;
-                y = Math.floor(Math.random() * (canvas.height / tamanho)) * tamanho;
-
-            } while (
-                cobra.some(parte => parte.x === x && parte.y === y)
-            );
-
-            comida = { x, y };
-        }
-
-
-        function desenhar() {
-
-            ctx.fillStyle = "#181818";
-
-            ctx.fillRect(
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
-
-
-            // COMIDA
-            ctx.fillStyle = "#e63c3c";
-
-            ctx.beginPath();
-
-            ctx.arc(
-                comida.x + tamanho / 2,
-                comida.y + tamanho / 2,
-                16,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fill();
-
-
-            // CORPO
-            cobra.forEach((parte, index) => {
-
-                if (index === cobra.length - 1) {
-                    ctx.fillStyle = "#00dc50";
-                } else {
-                    ctx.fillStyle = "#00963c";
-                }
-
-                ctx.fillRect(
-                    parte.x + 2,
-                    parte.y + 2,
-                    tamanho - 4,
-                    tamanho - 4
-                );
-            });
-
-
-            // ROSTO
-            const cabeca = cobra[cobra.length - 1];
-
-            desenharRosto(
-                cabeca.x,
-                cabeca.y
-            );
-        }
-
-
-        function desenharRosto(x, y) {
-
-            let olho1;
-            let olho2;
-
-            if (direcao === "direita") {
-
-                olho1 = {
-                    x: x + 29,
-                    y: y + 11
-                };
-
-                olho2 = {
-                    x: x + 29,
-                    y: y + 29
-                };
-
-            } else if (direcao === "esquerda") {
-
-                olho1 = {
-                    x: x + 11,
-                    y: y + 11
-                };
-
-                olho2 = {
-                    x: x + 11,
-                    y: y + 29
-                };
-
-            } else if (direcao === "cima") {
-
-                olho1 = {
-                    x: x + 11,
-                    y: y + 11
-                };
-
-                olho2 = {
-                    x: x + 29,
-                    y: y + 11
-                };
-
-            } else {
-
-                olho1 = {
-                    x: x + 11,
-                    y: y + 29
-                };
-
-                olho2 = {
-                    x: x + 29,
-                    y: y + 29
-                };
-            }
-
-
-            ctx.fillStyle = "white";
-
-            ctx.beginPath();
-
-            ctx.arc(
-                olho1.x,
-                olho1.y,
-                7,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fill();
-
-
-            ctx.beginPath();
-
-            ctx.arc(
-                olho2.x,
-                olho2.y,
-                7,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fill();
-
-
-            ctx.fillStyle = "black";
-
-            ctx.beginPath();
-
-            ctx.arc(
-                olho1.x,
-                olho1.y,
-                4,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fill();
-
-
-            ctx.beginPath();
-
-            ctx.arc(
-                olho2.x,
-                olho2.y,
-                4,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fill();
-        }
-
-
-        function atualizar() {
-
-            if (gameOver) {
-                return;
-            }
-
-            direcao = proximaDirecao;
-
-            const cabeca = {
-                ...cobra[cobra.length - 1]
-            };
-
-
-            if (direcao === "direita") {
-                cabeca.x += tamanho;
-            }
-
-            if (direcao === "esquerda") {
-                cabeca.x -= tamanho;
-            }
-
-            if (direcao === "cima") {
-                cabeca.y -= tamanho;
-            }
-
-            if (direcao === "baixo") {
-                cabeca.y += tamanho;
-            }
-
-
-            // BATEU NA PAREDE
-            if (
-                cabeca.x < 0 ||
-                cabeca.x >= canvas.width ||
-                cabeca.y < 0 ||
-                cabeca.y >= canvas.height
-            ) {
-
-                perder();
-                return;
-            }
-
-
-            // BATEU NO CORPO
-            if (
-                cobra.some(
-                    parte =>
-                        parte.x === cabeca.x &&
-                        parte.y === cabeca.y
-                )
-            ) {
-
-                perder();
-                return;
-            }
-
-
-            cobra.push(cabeca);
-
-
-            // COMEU A COMIDA
-            if (
-                cabeca.x === comida.x &&
-                cabeca.y === comida.y
-            ) {
-
-                pontos++;
-
-                pontosTexto.textContent = pontos;
-
-                criarComida();
-
-            } else {
-
-                cobra.shift();
-            }
-
-
-            desenhar();
-        }
-
-
-        function perder() {
-
-            gameOver = true;
-
-            mensagem.textContent = "Você perdeu! Tente novamente.";
-
-            botaoReiniciar.style.display = "inline-block";
-        }
-
-
-        document.addEventListener(
-            "keydown",
-            function(evento) {
-
-                if (
-                    evento.key === "ArrowLeft" &&
-                    direcao !== "direita"
-                ) {
-                    proximaDirecao = "esquerda";
-                }
-
-                if (
-                    evento.key === "ArrowRight" &&
-                    direcao !== "esquerda"
-                ) {
-                    proximaDirecao = "direita";
-                }
-
-                if (
-                    evento.key === "ArrowUp" &&
-                    direcao !== "baixo"
-                ) {
-                    proximaDirecao = "cima";
-                }
-
-                if (
-                    evento.key === "ArrowDown" &&
-                    direcao !== "cima"
-                ) {
-                    proximaDirecao = "baixo";
-                }
-            }
-        );
-
-
-        botaoReiniciar.addEventListener(
-            "click",
-            iniciarJogo
-        );
-
-
-        iniciarJogo();
-
-        desenhar();
-
-        setInterval(
-            atualizar,
-            100
-        );
-    </script>
+<footer>
+  Tavin.site
+</footer>
 
 </body>
 </html>
