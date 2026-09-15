@@ -9,595 +9,778 @@
     content="width=device-width, initial-scale=1.0, user-scalable=no"
 >
 
-<title>Tavin.site</title>
+<title>Bem-vindo ao meu site</title>
+
 
 <style>
-
-* {
-    box-sizing: border-box;
+:root {
+    --bg: #0d0e10;
+    --panel: #15171a;
+    --panel-hover: #191c20;
+    --line: #292c31;
+    --text: #f2f2f2;
+    --muted: #9b9da3;
+    --green: #18c964;
+    --green-hover: #20df73;
 }
 
-html {
-    scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
     margin: 0;
-    background: #0d0d0f;
-    color: white;
+    background: var(--bg);
+    color: var(--text);
     font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
 }
 
-/* =========================
-   MENU
-========================= */
+button { font-family: inherit; }
 
+/* MENU */
 header {
+    height: 64px;
     width: 100%;
-    height: 70px;
-
+    padding: 0 max(22px, 7%);
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    padding: 0 7%;
-
-    background: rgba(15,15,18,0.95);
-
-    border-bottom: 1px solid #292929;
-
+    background: #101113;
+    border-bottom: 1px solid #232529;
     position: sticky;
     top: 0;
-
     z-index: 100;
 }
 
 .logo {
-    font-size: 25px;
-    font-weight: bold;
-    color: #00dc50;
+    color: var(--green);
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: .7px;
+    cursor: pointer;
+    user-select: none;
 }
 
 nav {
+    height: 100%;
     display: flex;
-    gap: 30px;
+    align-items: center;
+    gap: 28px;
 }
 
 nav button {
-    background: none;
-    border: none;
-    color: #ccc;
-    font-size: 16px;
+    height: 100%;
+    padding: 0 2px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: #b9bbc0;
+    font-size: 15px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: color .15s ease, border-color .15s ease;
 }
 
-nav button:hover {
-    color: #00dc50;
+nav button:hover,
+nav button.navAtivo {
+    color: #fff;
+    border-bottom-color: var(--green);
 }
 
-/* =========================
-   PÁGINAS
-========================= */
-
-.pagina {
+.menuMobile {
     display: none;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    background: transparent;
+    color: #ddd;
+    font-size: 25px;
+    cursor: pointer;
 }
 
-.pagina.ativa {
-    display: block;
-}
+/* PÁGINAS */
+.pagina { display: none; }
+.pagina.ativa { display: block; }
 
-/* =========================
-   INÍCIO
-========================= */
-
-#inicio {
-    min-height: calc(100vh - 70px);
-}
+/* INÍCIO */
+#inicio { min-height: calc(100vh - 64px); }
 
 .hero {
-    min-height: 600px;
-
+    min-height: 570px;
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    padding: 40px 20px;
+    padding: 80px 8%;
 }
 
 .heroConteudo {
-    max-width: 850px;
+    width: 100%;
+    max-width: 760px;
 }
 
 .hero h1 {
-    font-size: 58px;
     margin: 0 0 20px;
+    font-size: clamp(42px, 6vw, 68px);
+    line-height: 1.03;
+    letter-spacing: -2px;
 }
 
-.hero h1 span {
-    color: #00dc50;
-}
+
 
 .hero p {
-    color: #aaa;
-    font-size: 21px;
+    max-width: 650px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 19px;
     line-height: 1.7;
-    max-width: 700px;
-    margin: auto;
+}
+
+.botaoPrincipal,
+.botaoProjeto,
+#reiniciar {
+    border: 0;
+    background: var(--green);
+    color: #07120b;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s ease, transform .15s ease;
 }
 
 .botaoPrincipal {
-    display: inline-block;
-
-    margin-top: 35px;
-
-    padding: 15px 30px;
-
-    border: none;
-    border-radius: 10px;
-
-    background: #00c749;
-    color: white;
-
-    font-size: 18px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.2s;
+    margin-top: 30px;
+    padding: 13px 20px;
+    border-radius: 6px;
+    font-size: 16px;
 }
 
-.botaoPrincipal:hover {
-    background: #00e653;
-    transform: translateY(-2px);
+.botaoPrincipal:hover,
+.botaoProjeto:hover,
+#reiniciar:hover {
+    background: var(--green-hover);
+    transform: translateY(-1px);
 }
-
-/* =========================
-   SOBRE
-========================= */
 
 .sobre {
-    max-width: 1100px;
+    max-width: 1080px;
     margin: auto;
-    padding: 70px 30px;
+    padding: 70px 30px 90px;
+    border-top: 1px solid #202226;
 }
 
 .sobre h2 {
-    font-size: 36px;
-    margin-bottom: 20px;
+    margin: 0 0 16px;
+    font-size: 30px;
 }
 
-.sobre p {
-    color: #aaa;
-    font-size: 18px;
+.sobre > p {
+    max-width: 760px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 17px;
     line-height: 1.7;
 }
 
 .infos {
-    margin-top: 40px;
-
     display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 42px;
+    background: var(--line);
+    border: 1px solid var(--line);
 }
 
 .infoCard {
-    background: #17171b;
-    border: 1px solid #29292e;
-
-    padding: 25px;
-
-    border-radius: 15px;
+    background: #121416;
+    padding: 24px;
 }
 
 .infoCard h3 {
-    color: #00dc50;
-    margin-top: 0;
+    margin: 0 0 10px;
+    color: #e7e7e7;
+    font-size: 17px;
 }
 
-/* =========================
-   PROJETOS
-========================= */
+.infoCard p {
+    margin: 0;
+    color: #8f9298;
+    line-height: 1.55;
+    font-size: 15px;
+}
 
+/* PROJETOS */
 #projetos {
-    min-height: calc(100vh - 70px);
-    padding: 60px 7%;
+    min-height: calc(100vh - 64px);
+    padding: 70px 7%;
 }
 
 .tituloPagina {
-    text-align: center;
-    margin-bottom: 50px;
+    max-width: 950px;
+    margin: 0 auto 38px;
 }
 
 .tituloPagina h1 {
-    font-size: 42px;
-    margin-bottom: 10px;
+    margin: 0 0 8px;
+    font-size: 38px;
 }
 
 .tituloPagina p {
-    color: #999;
-    font-size: 18px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 16px;
 }
 
 .gradeProjetos {
+    max-width: 950px;
+    margin: auto;
     display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(280px, 350px));
-
-    justify-content: center;
-
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 330px));
+    gap: 18px;
 }
 
 .cardProjeto {
-    background: #17171b;
-    border: 1px solid #29292e;
-
-    border-radius: 17px;
-
-    padding: 30px;
-
-    transition: 0.25s;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 25px;
+    transition: background .15s ease, border-color .15s ease;
 }
 
 .cardProjeto:hover {
-    transform: translateY(-5px);
-    border-color: #00b944;
+    background: var(--panel-hover);
+    border-color: #3a3e44;
 }
 
 .iconeProjeto {
-    font-size: 50px;
+    margin-bottom: 18px;
+    font-size: 34px;
 }
 
 .cardProjeto h2 {
-    margin-bottom: 10px;
+    margin: 0 0 10px;
+    font-size: 21px;
 }
 
 .cardProjeto p {
-    color: #999;
-    line-height: 1.5;
+    min-height: 70px;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.55;
+    font-size: 15px;
 }
 
 .botaoProjeto {
-    margin-top: 15px;
-
-    padding: 12px 20px;
-
-    background: #00bd45;
-
-    border: none;
-
-    color: white;
-
-    border-radius: 8px;
-
-    font-size: 16px;
-
-    cursor: pointer;
+    margin-top: 20px;
+    padding: 10px 17px;
+    border-radius: 5px;
+    font-size: 15px;
 }
 
-.botaoProjeto:hover {
-    background: #00df51;
-}
-
-/* =========================
-   ESCOLHER DISPOSITIVO
-========================= */
-
+/* ESCOLHA DE DISPOSITIVO */
 #escolherDispositivo {
-    min-height: calc(100vh - 70px);
-
-    display: none;
-
+    min-height: calc(100vh - 64px);
     align-items: center;
     justify-content: center;
-
-    text-align: center;
-
-    padding: 30px;
+    padding: 35px 20px;
 }
 
-#escolherDispositivo.ativa {
-    display: flex;
+#escolherDispositivo.ativa { display: flex; }
+
+.escolhaContainer {
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
 }
 
 .escolhaContainer h1 {
-    font-size: 42px;
+    margin: 0 0 10px;
+    font-size: 34px;
 }
 
-.escolhaContainer p {
-    color: #aaa;
-    font-size: 19px;
-    margin-bottom: 35px;
+.escolhaContainer > p {
+    margin: 0 0 30px;
+    color: var(--muted);
+    font-size: 17px;
 }
 
 .opcoesDispositivo {
-    display: flex;
-
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 240px));
     justify-content: center;
-
-    gap: 20px;
-
-    flex-wrap: wrap;
+    gap: 14px;
 }
 
 .botaoDispositivo {
-    width: 230px;
-    height: 160px;
-
-    border: 2px solid #29292e;
-
-    background: #17171b;
-
-    border-radius: 18px;
-
-    color: white;
-
-    font-size: 22px;
-
+    min-height: 135px;
+    padding: 20px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: #eee;
+    font-size: 18px;
     cursor: pointer;
-
-    transition: 0.2s;
+    transition: border-color .15s ease, background .15s ease;
 }
 
 .botaoDispositivo:hover {
-    transform: translateY(-5px);
-    border-color: #00dc50;
+    border-color: var(--green);
+    background: var(--panel-hover);
 }
 
 .dispositivoIcone {
     display: block;
-    font-size: 60px;
     margin-bottom: 12px;
+    font-size: 40px;
 }
 
-/* =========================
-   JOGO
-========================= */
-
+/* JOGO */
 #paginaJogo {
-    min-height: calc(100vh - 70px);
-
+    min-height: calc(100vh - 64px);
+    padding: 10px 15px 24px;
     text-align: center;
-
-    padding: 15px;
 }
 
 #paginaJogo h1 {
-    margin: 10px;
+    margin: 2px 0 5px;
+    font-size: 27px;
 }
 
 #pontosContainer {
-    font-size: 19px;
-    margin: 10px;
+    margin: 5px 0 9px;
+    color: #c9cbd0;
+    font-size: 17px;
+}
+
+#pontos {
+    color: var(--green);
+    font-weight: bold;
 }
 
 #canvasContainer {
     width: 100%;
-
     display: flex;
-
     justify-content: center;
 }
 
-/*
-   TAMANHO VISUAL DO JOGO
-
-   A resolução interna continua
-   sendo 1280x720.
-
-   No computador o jogo aparece
-   com no máximo 900px.
-*/
-
 canvas {
-    background: #181818;
-
-    border: 3px solid white;
-
-    width: 900px;
-    max-width: 90%;
-
+    display: block;
+    width: min(92vw, calc((100vh - 205px) * 16 / 9));
+    max-height: calc(100vh - 205px);
     height: auto;
-
+    background: #181818;
+    border: 1px solid #3b3e43;
     touch-action: none;
-
-    border-radius: 8px;
 }
 
 #mensagem {
-    font-size: 25px;
-    margin-top: 15px;
+    min-height: 30px;
+    margin-top: 14px;
+    font-size: 20px;
 }
 
 #reiniciar {
     display: none;
-
-    margin: 15px auto;
-
-    padding: 12px 25px;
-
-    border: none;
-
-    border-radius: 9px;
-
-    background: #00bd45;
-
-    color: white;
-
-    font-size: 17px;
-
-    cursor: pointer;
+    margin: 8px auto 0;
+    padding: 11px 18px;
+    border-radius: 5px;
+    font-size: 15px;
 }
 
-/* =========================
-   CONTROLES MOBILE
-========================= */
-
+/* CONTROLES MOBILE */
 #controlesMobile {
     display: none;
-
-    width: 250px;
-
-    margin: 20px auto;
+    width: 230px;
+    margin: 18px auto 8px;
 }
 
 .linhaControle {
     display: flex;
-
     justify-content: center;
-
-    gap: 10px;
-
+    gap: 8px;
     margin: 8px;
 }
 
 .controle {
-    width: 70px;
-    height: 70px;
-
-    border: none;
-
-    border-radius: 15px;
-
-    background: #28282d;
-
+    width: 64px;
+    height: 58px;
+    border: 1px solid #3a3d42;
+    border-radius: 7px;
+    background: #202226;
     color: white;
-
-    font-size: 30px;
-
+    font-size: 24px;
     cursor: pointer;
-
     touch-action: manipulation;
-
     user-select: none;
 }
 
 .controle:active {
-    background: #00a73d;
-    transform: scale(0.94);
+    background: #2c3035;
+    border-color: var(--green);
 }
 
 .botoesJogo {
     display: flex;
-
     justify-content: center;
-
     flex-wrap: wrap;
-
-    gap: 10px;
-
-    margin-top: 20px;
+    gap: 9px;
+    margin-top: 18px;
 }
 
 .botaoSecundario {
-    padding: 10px 18px;
-
-    background: #29292e;
-
-    color: white;
-
-    border: none;
-
-    border-radius: 8px;
-
+    padding: 9px 14px;
+    border: 1px solid #34373c;
+    border-radius: 5px;
+    background: #1b1d20;
+    color: #cfd0d3;
     cursor: pointer;
+    transition: background .15s ease, color .15s ease;
 }
 
-/* =========================
-   RODAPÉ
-========================= */
+.botaoSecundario:hover {
+    background: #24272b;
+    color: white;
+}
 
+/* RODAPÉ */
 footer {
-    text-align: center;
-
-    padding: 30px;
-
-    border-top: 1px solid #292929;
-
-    color: #777;
+    padding: 28px 7%;
+    border-top: 1px solid #202226;
+    color: #696c72;
+    font-size: 13px;
+    text-align: left;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
+/* MOBILE */
 @media (max-width: 700px) {
-
     header {
-        padding: 0 20px;
+        height: 58px;
+        padding: 0 18px;
     }
 
-    .logo {
-        font-size: 20px;
+    .logo { font-size: 18px; }
+
+    .menuMobile {
+        display: block;
+        position: relative;
+        z-index: 102;
     }
 
     nav {
-        gap: 12px;
+        display: none;
+        position: absolute;
+        top: 58px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        padding: 8px 18px 14px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: #101113;
+        border-bottom: 1px solid #292b30;
     }
 
+    nav.aberto { display: flex; }
+
     nav button {
-        font-size: 14px;
+        height: auto;
+        padding: 13px 0;
+        text-align: left;
+        border-bottom: 1px solid #202226;
+        font-size: 15px;
+    }
+
+    nav button:last-child { border-bottom: 0; }
+
+    nav button:hover,
+    nav button.navAtivo {
+        border-bottom-color: #202226;
+        color: var(--green);
     }
 
     .hero {
         min-height: 500px;
+        padding: 60px 22px;
     }
 
     .hero h1 {
-        font-size: 38px;
+        font-size: 42px;
+        letter-spacing: -1.4px;
     }
 
-    .hero p {
-        font-size: 17px;
+    .hero p { font-size: 16px; }
+
+    .sobre { padding: 55px 22px 70px; }
+    .sobre h2 { font-size: 27px; }
+
+    .infos {
+        grid-template-columns: 1fr;
+        gap: 1px;
     }
 
-    .escolhaContainer h1 {
-        font-size: 30px;
+    #projetos { padding: 50px 20px; }
+    .tituloPagina h1 { font-size: 32px; }
+
+    .gradeProjetos {
+        grid-template-columns: 1fr;
     }
 
-    .botaoDispositivo {
-        width: 160px;
-        height: 130px;
-        font-size: 18px;
+    .opcoesDispositivo {
+        grid-template-columns: 1fr;
+        max-width: 270px;
+        margin: auto;
     }
 
-    .dispositivoIcone {
-        font-size: 45px;
-    }
+    .botaoDispositivo { min-height: 110px; }
 
-    /*
-       No celular o jogo usa
-       praticamente toda a largura.
-    */
+    .escolhaContainer h1 { font-size: 28px; }
+
+    #paginaJogo { padding: 12px 8px 30px; }
+
+    #paginaJogo h1 { font-size: 22px; }
 
     canvas {
         width: 100%;
         max-width: 100%;
     }
 
+    #mensagem { font-size: 18px; }
+
+    footer {
+        padding-left: 22px;
+        text-align: left;
+    }
+}
+
+/* RESPONSIVIDADE AUTOMÁTICA DO SITE E DO JOGO */
+
+/* O jogo mantém 16:9 e nunca ultrapassa o espaço disponível na tela */
+#canvasContainer {
+    width: 100%;
+    padding: 0 8px;
+}
+
+canvas {
+    display: block;
+    width: min(92vw, calc((100dvh - 205px) * 16 / 9), 1280px);
+    max-width: 100%;
+    max-height: calc(100dvh - 205px);
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background: #181818;
+    border: 1px solid #3b3e43;
+    touch-action: none;
+}
+
+/* Monitores/notebooks com pouca altura */
+@media (max-height: 800px) and (min-width: 701px) {
     #paginaJogo {
-        padding: 8px;
+        padding-top: 5px;
     }
 
     #paginaJogo h1 {
-        font-size: 25px;
+        margin: 0 0 3px;
+        font-size: 22px;
     }
 
-    #mensagem {
-        font-size: 20px;
+    #pontosContainer {
+        margin: 3px 0 6px;
+        font-size: 15px;
     }
 
+    canvas {
+        width: min(88vw, calc((100dvh - 165px) * 16 / 9), 1280px);
+        max-height: calc(100dvh - 165px);
+    }
+
+    .botoesJogo {
+        margin-top: 10px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 701px) and (max-width: 1024px) {
+    header {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .hero {
+        min-height: 520px;
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+
+    .hero h1 {
+        font-size: clamp(42px, 7vw, 58px);
+    }
+
+    #projetos {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    canvas {
+        width: min(94vw, calc((100dvh - 195px) * 16 / 9));
+    }
+}
+
+/* Celular */
+@media (max-width: 700px) {
+    body {
+        width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    header {
+        width: 100%;
+    }
+
+    .hero {
+        min-height: calc(100dvh - 58px);
+        padding: 45px 20px;
+    }
+
+    .heroConteudo {
+        max-width: 100%;
+    }
+
+    .hero h1 {
+        font-size: clamp(34px, 11vw, 44px);
+        line-height: 1.08;
+    }
+
+    .hero p {
+        font-size: clamp(15px, 4.2vw, 17px);
+    }
+
+    .sobre,
+    #projetos {
+        width: 100%;
+    }
+
+    .cardProjeto {
+        width: 100%;
+    }
+
+    #paginaJogo {
+        width: 100%;
+        min-height: calc(100dvh - 58px);
+        padding: 8px 5px 20px;
+    }
+
+    #paginaJogo h1 {
+        font-size: clamp(19px, 6vw, 23px);
+        margin: 2px 0 4px;
+    }
+
+    #pontosContainer {
+        margin: 3px 0 7px;
+        font-size: 15px;
+    }
+
+    #canvasContainer {
+        padding: 0;
+    }
+
+    canvas {
+        width: min(100%, calc((100dvh - 315px) * 16 / 9));
+        max-width: 100%;
+        max-height: calc(100dvh - 315px);
+        min-height: 0;
+    }
+
+    #controlesMobile {
+        width: min(220px, 90vw);
+        margin: 12px auto 5px;
+    }
+
+    .controle {
+        width: clamp(52px, 16vw, 64px);
+        height: clamp(48px, 14vw, 58px);
+        font-size: 22px;
+    }
+
+    .linhaControle {
+        margin: 5px;
+        gap: 6px;
+    }
+
+    .botoesJogo {
+        margin-top: 10px;
+        gap: 6px;
+    }
+
+    .botaoSecundario {
+        padding: 8px 11px;
+        font-size: 13px;
+    }
+}
+
+/* Celulares pequenos */
+@media (max-width: 400px) {
+    .hero {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .sobre {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    #projetos {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .escolhaContainer h1 {
+        font-size: 24px;
+    }
+
+    canvas {
+        width: 100%;
+        max-height: calc(100dvh - 300px);
+    }
+}
+
+/* Tela na horizontal em celular */
+@media (max-height: 500px) and (orientation: landscape) {
+    #paginaJogo {
+        padding-top: 3px;
+    }
+
+    #paginaJogo h1 {
+        display: none;
+    }
+
+    #pontosContainer {
+        margin: 2px 0 4px;
+    }
+
+    canvas {
+        width: min(72vw, calc((100dvh - 105px) * 16 / 9));
+        max-height: calc(100dvh - 105px);
+    }
+
+    #controlesMobile {
+        margin-top: 5px;
+    }
+
+    .controle {
+        width: 48px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .linhaControle {
+        margin: 3px;
+    }
+
+    .botoesJogo {
+        margin-top: 5px;
+    }
 }
 
 </style>
+
 
 </head>
 
@@ -611,11 +794,13 @@ footer {
 
 <header>
 
-    <div class="logo">
-        TAVIN.SITE
+    <div class="logo" onclick="abrirPagina('inicio')">
+        Bem-vindo ao meu site
     </div>
 
-    <nav>
+    <button class="menuMobile" id="menuMobile" aria-label="Abrir menu">☰</button>
+
+    <nav id="menuNavegacao">
 
         <button onclick="abrirPagina('inicio')">
             Início
@@ -643,10 +828,7 @@ footer {
 
         <div class="heroConteudo">
 
-            <h1>
-                Bem-vindo ao
-                <span>Tavin.site</span>
-            </h1>
+            <h1>Bem-vindo ao meu site</h1>
 
             <p>
                 Este é um espaço onde eu publico
@@ -674,7 +856,7 @@ footer {
         </h2>
 
         <p>
-            O Tavin.site foi criado para reunir
+            O meu site foi criado para reunir
             meus projetos em um único lugar.
             Aqui você poderá encontrar jogos,
             páginas, experiências e outros
@@ -732,7 +914,7 @@ footer {
 
 
     <footer>
-        Tavin.site • Projetos e jogos
+        meu site • Projetos e jogos
     </footer>
 
 </section>
@@ -978,6 +1160,33 @@ footer {
    SISTEMA DO SITE
 ========================= */
 
+const menuMobile = document.getElementById("menuMobile");
+const menuNavegacao = document.getElementById("menuNavegacao");
+
+menuMobile.addEventListener("click", function () {
+    menuNavegacao.classList.toggle("aberto");
+    menuMobile.textContent = menuNavegacao.classList.contains("aberto") ? "×" : "☰";
+});
+
+function fecharMenuMobile() {
+    menuNavegacao.classList.remove("aberto");
+    menuMobile.textContent = "☰";
+}
+
+function atualizarMenuAtivo(id) {
+    document.querySelectorAll("nav button").forEach(botao => {
+        botao.classList.remove("navAtivo");
+    });
+
+    if (id === "inicio") {
+        document.querySelector('nav button[onclick*="inicio"]').classList.add("navAtivo");
+    }
+
+    if (id === "projetos") {
+        document.querySelector('nav button[onclick*="projetos"]').classList.add("navAtivo");
+    }
+}
+
 let modo = "";
 
 
@@ -1010,6 +1219,9 @@ function abrirPagina(id) {
         .add("ativa");
 
     modo = "";
+
+    fecharMenuMobile();
+    atualizarMenuAtivo(id);
 
     window.scrollTo(
         0,
@@ -2277,6 +2489,8 @@ botaoReiniciar
 /* =========================
    COMEÇAR
 ========================= */
+
+atualizarMenuAtivo("inicio");
 
 requestAnimationFrame(
     loop
