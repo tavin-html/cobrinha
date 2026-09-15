@@ -1,2503 +1,666 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no"
->
-
-<title>Bem-vindo ao meu site</title>
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          void: '#0B0A14',
+          surface: '#15121F',
+          surfacelight: '#1E1930',
+          hair: '#2A2440',
+          primary: '#7C5CFF',
+          secondary: '#35E7C7',
+          ink: '#EDEAF6',
+          muted: '#948FB0',
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
 <style>
-:root {
-    --bg: #0d0e10;
-    --panel: #15171a;
-    --panel-hover: #191c20;
-    --line: #292c31;
-    --text: #f2f2f2;
-    --muted: #9b9da3;
-    --green: #18c964;
-    --green-hover: #20df73;
-}
+  * { scrollbar-width: thin; scrollbar-color: #2A2440 transparent; }
+  *::-webkit-scrollbar { width: 6px; height: 6px; }
+  *::-webkit-scrollbar-thumb { background: #2A2440; border-radius: 4px; }
 
-* { box-sizing: border-box; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
 
-html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: #0B0A14; }
 
-body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
-    overflow-x: hidden;
-}
+  .node-pulse {
+    animation: nodepulse 3.2s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes nodepulse {
+    0%, 100% { opacity: 1; r: 5; }
+    50% { opacity: .55; r: 6.5; }
+  }
 
-button { font-family: inherit; }
+  .msg-enter { animation: msgin .28s ease-out; }
+  @keyframes msgin {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-/* MENU */
-header {
-    height: 64px;
-    width: 100%;
-    padding: 0 max(22px, 7%);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #101113;
-    border-bottom: 1px solid #232529;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+  .typing-dot { animation: dotbounce 1.1s infinite ease-in-out; }
+  .typing-dot:nth-child(2) { animation-delay: .15s; }
+  .typing-dot:nth-child(3) { animation-delay: .3s; }
+  @keyframes dotbounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: .5; }
+    30% { transform: translateY(-3px); opacity: 1; }
+  }
 
-.logo {
-    color: var(--green);
-    font-size: 21px;
-    font-weight: 800;
-    letter-spacing: .7px;
-    cursor: pointer;
-    user-select: none;
-}
+  textarea:focus, input:focus, button:focus-visible {
+    outline: 2px solid #7C5CFF;
+    outline-offset: 2px;
+  }
 
-nav {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 28px;
-}
-
-nav button {
-    height: 100%;
-    padding: 0 2px;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    background: transparent;
-    color: #b9bbc0;
-    font-size: 15px;
-    cursor: pointer;
-    transition: color .15s ease, border-color .15s ease;
-}
-
-nav button:hover,
-nav button.navAtivo {
-    color: #fff;
-    border-bottom-color: var(--green);
-}
-
-.menuMobile {
-    display: none;
-    width: 38px;
-    height: 38px;
-    border: 0;
-    background: transparent;
-    color: #ddd;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-/* PÁGINAS */
-.pagina { display: none; }
-.pagina.ativa { display: block; }
-
-/* INÍCIO */
-#inicio { min-height: calc(100vh - 64px); }
-
-.hero {
-    min-height: 570px;
-    display: flex;
-    align-items: center;
-    padding: 80px 8%;
-}
-
-.heroConteudo {
-    width: 100%;
-    max-width: 760px;
-}
-
-.hero h1 {
-    margin: 0 0 20px;
-    font-size: clamp(42px, 6vw, 68px);
-    line-height: 1.03;
-    letter-spacing: -2px;
-}
-
-
-
-.hero p {
-    max-width: 650px;
-    margin: 0;
-    color: var(--muted);
-    font-size: 19px;
-    line-height: 1.7;
-}
-
-.botaoPrincipal,
-.botaoProjeto,
-#reiniciar {
-    border: 0;
-    background: var(--green);
-    color: #07120b;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background .15s ease, transform .15s ease;
-}
-
-.botaoPrincipal {
-    margin-top: 30px;
-    padding: 13px 20px;
-    border-radius: 6px;
-    font-size: 16px;
-}
-
-.botaoPrincipal:hover,
-.botaoProjeto:hover,
-#reiniciar:hover {
-    background: var(--green-hover);
-    transform: translateY(-1px);
-}
-
-.sobre {
-    max-width: 1080px;
-    margin: auto;
-    padding: 70px 30px 90px;
-    border-top: 1px solid #202226;
-}
-
-.sobre h2 {
-    margin: 0 0 16px;
-    font-size: 30px;
-}
-
-.sobre > p {
-    max-width: 760px;
-    margin: 0;
-    color: var(--muted);
-    font-size: 17px;
-    line-height: 1.7;
-}
-
-.infos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    margin-top: 42px;
-    background: var(--line);
-    border: 1px solid var(--line);
-}
-
-.infoCard {
-    background: #121416;
-    padding: 24px;
-}
-
-.infoCard h3 {
-    margin: 0 0 10px;
-    color: #e7e7e7;
-    font-size: 17px;
-}
-
-.infoCard p {
-    margin: 0;
-    color: #8f9298;
+  .prose-msg p { margin: 0 0 0.6em 0; }
+  .prose-msg p:last-child { margin-bottom: 0; }
+  .prose-msg code {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(124,92,255,0.14);
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    font-size: 0.88em;
+  }
+  .prose-msg pre {
+    font-family: 'JetBrains Mono', monospace;
+    background: #0F0D18;
+    border: 1px solid #2A2440;
+    padding: 0.9em 1em;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 0.6em 0;
+    font-size: 0.85em;
     line-height: 1.55;
-    font-size: 15px;
-}
+  }
+  .prose-msg pre code { background: none; padding: 0; }
 
-/* PROJETOS */
-#projetos {
-    min-height: calc(100vh - 64px);
-    padding: 70px 7%;
-}
-
-.tituloPagina {
-    max-width: 950px;
-    margin: 0 auto 38px;
-}
-
-.tituloPagina h1 {
-    margin: 0 0 8px;
-    font-size: 38px;
-}
-
-.tituloPagina p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 16px;
-}
-
-.gradeProjetos {
-    max-width: 950px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 330px));
-    gap: 18px;
-}
-
-.cardProjeto {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    padding: 25px;
-    transition: background .15s ease, border-color .15s ease;
-}
-
-.cardProjeto:hover {
-    background: var(--panel-hover);
-    border-color: #3a3e44;
-}
-
-.iconeProjeto {
-    margin-bottom: 18px;
-    font-size: 34px;
-}
-
-.cardProjeto h2 {
-    margin: 0 0 10px;
-    font-size: 21px;
-}
-
-.cardProjeto p {
-    min-height: 70px;
-    margin: 0;
-    color: var(--muted);
-    line-height: 1.55;
-    font-size: 15px;
-}
-
-.botaoProjeto {
-    margin-top: 20px;
-    padding: 10px 17px;
-    border-radius: 5px;
-    font-size: 15px;
-}
-
-/* ESCOLHA DE DISPOSITIVO */
-#escolherDispositivo {
-    min-height: calc(100vh - 64px);
-    align-items: center;
-    justify-content: center;
-    padding: 35px 20px;
-}
-
-#escolherDispositivo.ativa { display: flex; }
-
-.escolhaContainer {
-    width: 100%;
-    max-width: 700px;
-    text-align: center;
-}
-
-.escolhaContainer h1 {
-    margin: 0 0 10px;
-    font-size: 34px;
-}
-
-.escolhaContainer > p {
-    margin: 0 0 30px;
-    color: var(--muted);
-    font-size: 17px;
-}
-
-.opcoesDispositivo {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(180px, 240px));
-    justify-content: center;
-    gap: 14px;
-}
-
-.botaoDispositivo {
-    min-height: 135px;
-    padding: 20px;
-    border: 1px solid var(--line);
-    background: var(--panel);
-    color: #eee;
-    font-size: 18px;
-    cursor: pointer;
-    transition: border-color .15s ease, background .15s ease;
-}
-
-.botaoDispositivo:hover {
-    border-color: var(--green);
-    background: var(--panel-hover);
-}
-
-.dispositivoIcone {
-    display: block;
-    margin-bottom: 12px;
-    font-size: 40px;
-}
-
-/* JOGO */
-#paginaJogo {
-    min-height: calc(100vh - 64px);
-    padding: 10px 15px 24px;
-    text-align: center;
-}
-
-#paginaJogo h1 {
-    margin: 2px 0 5px;
-    font-size: 27px;
-}
-
-#pontosContainer {
-    margin: 5px 0 9px;
-    color: #c9cbd0;
-    font-size: 17px;
-}
-
-#pontos {
-    color: var(--green);
-    font-weight: bold;
-}
-
-#canvasContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-canvas {
-    display: block;
-    width: min(92vw, calc((100vh - 205px) * 16 / 9));
-    max-height: calc(100vh - 205px);
-    height: auto;
-    background: #181818;
-    border: 1px solid #3b3e43;
-    touch-action: none;
-}
-
-#mensagem {
-    min-height: 30px;
-    margin-top: 14px;
-    font-size: 20px;
-}
-
-#reiniciar {
-    display: none;
-    margin: 8px auto 0;
-    padding: 11px 18px;
-    border-radius: 5px;
-    font-size: 15px;
-}
-
-/* CONTROLES MOBILE */
-#controlesMobile {
-    display: none;
-    width: 230px;
-    margin: 18px auto 8px;
-}
-
-.linhaControle {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 8px;
-}
-
-.controle {
-    width: 64px;
-    height: 58px;
-    border: 1px solid #3a3d42;
-    border-radius: 7px;
-    background: #202226;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    touch-action: manipulation;
-    user-select: none;
-}
-
-.controle:active {
-    background: #2c3035;
-    border-color: var(--green);
-}
-
-.botoesJogo {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 9px;
-    margin-top: 18px;
-}
-
-.botaoSecundario {
-    padding: 9px 14px;
-    border: 1px solid #34373c;
-    border-radius: 5px;
-    background: #1b1d20;
-    color: #cfd0d3;
-    cursor: pointer;
-    transition: background .15s ease, color .15s ease;
-}
-
-.botaoSecundario:hover {
-    background: #24272b;
-    color: white;
-}
-
-/* RODAPÉ */
-footer {
-    padding: 28px 7%;
-    border-top: 1px solid #202226;
-    color: #696c72;
-    font-size: 13px;
-    text-align: left;
-}
-
-/* MOBILE */
-@media (max-width: 700px) {
-    header {
-        height: 58px;
-        padding: 0 18px;
-    }
-
-    .logo { font-size: 18px; }
-
-    .menuMobile {
-        display: block;
-        position: relative;
-        z-index: 102;
-    }
-
-    nav {
-        display: none;
-        position: absolute;
-        top: 58px;
-        left: 0;
-        width: 100%;
-        height: auto;
-        padding: 8px 18px 14px;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        background: #101113;
-        border-bottom: 1px solid #292b30;
-    }
-
-    nav.aberto { display: flex; }
-
-    nav button {
-        height: auto;
-        padding: 13px 0;
-        text-align: left;
-        border-bottom: 1px solid #202226;
-        font-size: 15px;
-    }
-
-    nav button:last-child { border-bottom: 0; }
-
-    nav button:hover,
-    nav button.navAtivo {
-        border-bottom-color: #202226;
-        color: var(--green);
-    }
-
-    .hero {
-        min-height: 500px;
-        padding: 60px 22px;
-    }
-
-    .hero h1 {
-        font-size: 42px;
-        letter-spacing: -1.4px;
-    }
-
-    .hero p { font-size: 16px; }
-
-    .sobre { padding: 55px 22px 70px; }
-    .sobre h2 { font-size: 27px; }
-
-    .infos {
-        grid-template-columns: 1fr;
-        gap: 1px;
-    }
-
-    #projetos { padding: 50px 20px; }
-    .tituloPagina h1 { font-size: 32px; }
-
-    .gradeProjetos {
-        grid-template-columns: 1fr;
-    }
-
-    .opcoesDispositivo {
-        grid-template-columns: 1fr;
-        max-width: 270px;
-        margin: auto;
-    }
-
-    .botaoDispositivo { min-height: 110px; }
-
-    .escolhaContainer h1 { font-size: 28px; }
-
-    #paginaJogo { padding: 12px 8px 30px; }
-
-    #paginaJogo h1 { font-size: 22px; }
-
-    canvas {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    #mensagem { font-size: 18px; }
-
-    footer {
-        padding-left: 22px;
-        text-align: left;
-    }
-}
-
-/* RESPONSIVIDADE AUTOMÁTICA DO SITE E DO JOGO */
-
-/* O jogo mantém 16:9 e nunca ultrapassa o espaço disponível na tela */
-#canvasContainer {
-    width: 100%;
-    padding: 0 8px;
-}
-
-canvas {
-    display: block;
-    width: min(92vw, calc((100dvh - 205px) * 16 / 9), 1280px);
-    max-width: 100%;
-    max-height: calc(100dvh - 205px);
-    height: auto;
-    aspect-ratio: 16 / 9;
-    background: #181818;
-    border: 1px solid #3b3e43;
-    touch-action: none;
-}
-
-/* Monitores/notebooks com pouca altura */
-@media (max-height: 800px) and (min-width: 701px) {
-    #paginaJogo {
-        padding-top: 5px;
-    }
-
-    #paginaJogo h1 {
-        margin: 0 0 3px;
-        font-size: 22px;
-    }
-
-    #pontosContainer {
-        margin: 3px 0 6px;
-        font-size: 15px;
-    }
-
-    canvas {
-        width: min(88vw, calc((100dvh - 165px) * 16 / 9), 1280px);
-        max-height: calc(100dvh - 165px);
-    }
-
-    .botoesJogo {
-        margin-top: 10px;
-    }
-}
-
-/* Tablet */
-@media (min-width: 701px) and (max-width: 1024px) {
-    header {
-        padding-left: 4%;
-        padding-right: 4%;
-    }
-
-    .hero {
-        min-height: 520px;
-        padding-left: 6%;
-        padding-right: 6%;
-    }
-
-    .hero h1 {
-        font-size: clamp(42px, 7vw, 58px);
-    }
-
-    #projetos {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-
-    canvas {
-        width: min(94vw, calc((100dvh - 195px) * 16 / 9));
-    }
-}
-
-/* Celular */
-@media (max-width: 700px) {
-    body {
-        width: 100%;
-        min-width: 0;
-        overflow-x: hidden;
-    }
-
-    header {
-        width: 100%;
-    }
-
-    .hero {
-        min-height: calc(100dvh - 58px);
-        padding: 45px 20px;
-    }
-
-    .heroConteudo {
-        max-width: 100%;
-    }
-
-    .hero h1 {
-        font-size: clamp(34px, 11vw, 44px);
-        line-height: 1.08;
-    }
-
-    .hero p {
-        font-size: clamp(15px, 4.2vw, 17px);
-    }
-
-    .sobre,
-    #projetos {
-        width: 100%;
-    }
-
-    .cardProjeto {
-        width: 100%;
-    }
-
-    #paginaJogo {
-        width: 100%;
-        min-height: calc(100dvh - 58px);
-        padding: 8px 5px 20px;
-    }
-
-    #paginaJogo h1 {
-        font-size: clamp(19px, 6vw, 23px);
-        margin: 2px 0 4px;
-    }
-
-    #pontosContainer {
-        margin: 3px 0 7px;
-        font-size: 15px;
-    }
-
-    #canvasContainer {
-        padding: 0;
-    }
-
-    canvas {
-        width: min(100%, calc((100dvh - 315px) * 16 / 9));
-        max-width: 100%;
-        max-height: calc(100dvh - 315px);
-        min-height: 0;
-    }
-
-    #controlesMobile {
-        width: min(220px, 90vw);
-        margin: 12px auto 5px;
-    }
-
-    .controle {
-        width: clamp(52px, 16vw, 64px);
-        height: clamp(48px, 14vw, 58px);
-        font-size: 22px;
-    }
-
-    .linhaControle {
-        margin: 5px;
-        gap: 6px;
-    }
-
-    .botoesJogo {
-        margin-top: 10px;
-        gap: 6px;
-    }
-
-    .botaoSecundario {
-        padding: 8px 11px;
-        font-size: 13px;
-    }
-}
-
-/* Celulares pequenos */
-@media (max-width: 400px) {
-    .hero {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .sobre {
-        padding-left: 17px;
-        padding-right: 17px;
-    }
-
-    #projetos {
-        padding-left: 14px;
-        padding-right: 14px;
-    }
-
-    .escolhaContainer h1 {
-        font-size: 24px;
-    }
-
-    canvas {
-        width: 100%;
-        max-height: calc(100dvh - 300px);
-    }
-}
-
-/* Tela na horizontal em celular */
-@media (max-height: 500px) and (orientation: landscape) {
-    #paginaJogo {
-        padding-top: 3px;
-    }
-
-    #paginaJogo h1 {
-        display: none;
-    }
-
-    #pontosContainer {
-        margin: 2px 0 4px;
-    }
-
-    canvas {
-        width: min(72vw, calc((100dvh - 105px) * 16 / 9));
-        max-height: calc(100dvh - 105px);
-    }
-
-    #controlesMobile {
-        margin-top: 5px;
-    }
-
-    .controle {
-        width: 48px;
-        height: 40px;
-        font-size: 18px;
-    }
-
-    .linhaControle {
-        margin: 3px;
-    }
-
-    .botoesJogo {
-        margin-top: 5px;
-    }
-}
-
+  .sidebar-transition { transition: transform .25s ease; }
 </style>
-
-
 </head>
+<body class="h-screen w-screen overflow-hidden text-ink antialiased">
 
+<div class="flex h-full w-full">
 
-<body>
+  <!-- Overlay for mobile sidebar -->
+  <div id="overlay" class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden"></div>
 
+  <!-- SIDEBAR -->
+  <aside id="sidebar"
+    class="sidebar-transition fixed lg:static z-40 -translate-x-full lg:translate-x-0 h-full w-72 shrink-0 bg-surface border-r border-hair flex flex-col">
 
-<!-- =========================
-     MENU
-========================= -->
-
-<header>
-
-    <div class="logo" onclick="abrirPagina('inicio')">
-        Bem-vindo ao meu site
+    <div class="flex items-center gap-2.5 px-5 py-5">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="15" y1="15" x2="5" y2="7" stroke="#7C5CFF" stroke-width="1.4"/>
+        <line x1="15" y1="15" x2="25" y2="7" stroke="#7C5CFF" stroke-width="1.4"/>
+        <line x1="15" y1="15" x2="5" y2="23" stroke="#35E7C7" stroke-width="1.4"/>
+        <line x1="15" y1="15" x2="25" y2="23" stroke="#35E7C7" stroke-width="1.4"/>
+        <circle cx="5" cy="7" r="3" fill="#1E1930" stroke="#7C5CFF" stroke-width="1.3"/>
+        <circle cx="25" cy="7" r="3" fill="#1E1930" stroke="#7C5CFF" stroke-width="1.3"/>
+        <circle cx="5" cy="23" r="3" fill="#1E1930" stroke="#35E7C7" stroke-width="1.3"/>
+        <circle cx="25" cy="23" r="3" fill="#1E1930" stroke="#35E7C7" stroke-width="1.3"/>
+        <circle class="node-pulse" cx="15" cy="15" r="5" fill="#7C5CFF"/>
+      </svg>
+      <span class="font-display font-semibold text-[17px] tracking-tight">Nexus IA</span>
     </div>
 
-    <button class="menuMobile" id="menuMobile" aria-label="Abrir menu">☰</button>
+    <div class="px-3.5">
+      <button id="newChatBtn"
+        class="w-full flex items-center gap-2 rounded-lg border border-hair bg-surfacelight hover:bg-hair/60 transition-colors px-3.5 py-2.5 text-sm font-medium text-ink">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3.3V12.7M3.3 8H12.7" stroke="#EDEAF6" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Nova conversa
+      </button>
+    </div>
 
-    <nav id="menuNavegacao">
+    <div class="mt-5 px-3.5 flex-1 overflow-y-auto" id="conversationList"></div>
 
-        <button onclick="abrirPagina('inicio')">
-            Início
-        </button>
+    <div class="px-3.5 py-4 border-t border-hair">
+      <button id="openSettingsBtn"
+        class="w-full flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm text-muted hover:text-ink hover:bg-surfacelight transition-colors">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.6"/><path d="M19.4 13.5a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V19.5a2 2 0 11-4 0v-.09A1.65 1.65 0 009 17.9a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 13.5a1.65 1.65 0 00-1.51-1H3.1a2 2 0 110-4h.09A1.65 1.65 0 004.68 7.5a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 3.18a1.65 1.65 0 001-1.51V1.5a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.32 7.5a1.65 1.65 0 001.51 1h.09a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        Configurações
+        <span id="keyStatusDot" class="ml-auto w-1.5 h-1.5 rounded-full bg-muted/50"></span>
+      </button>
+    </div>
+  </aside>
 
-        <button onclick="abrirPagina('projetos')">
-            Projetos
-        </button>
+  <!-- MAIN -->
+  <main class="flex-1 flex flex-col h-full min-w-0">
 
-    </nav>
+    <!-- Top bar -->
+    <header class="flex items-center gap-3 px-4 lg:px-6 py-3.5 border-b border-hair bg-void/95 backdrop-blur">
+      <button id="menuBtn" class="lg:hidden p-1.5 -ml-1 text-ink">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </button>
+      <div class="min-w-0">
+        <h1 id="chatTitle" class="font-display font-semibold text-[15px] truncate">Nova conversa</h1>
+        <p id="modeLabel" class="text-[12.5px] text-muted -mt-0.5">Modo demonstração</p>
+      </div>
+    </header>
 
-</header>
-
-
-<!-- =========================
-     INÍCIO
-========================= -->
-
-<section
-    id="inicio"
-    class="pagina ativa"
->
-
-    <div class="hero">
-
-        <div class="heroConteudo">
-
-            <h1>Bem-vindo ao meu site</h1>
-
-            <p>
-                Este é um espaço onde eu publico
-                meus projetos, jogos e experiências
-                que estou criando enquanto aprendo
-                programação e desenvolvimento web.
-            </p>
-
-            <button
-                class="botaoPrincipal"
-                onclick="abrirPagina('projetos')"
-            >
-                Ver meus projetos
-            </button>
-
+    <!-- Messages -->
+    <div id="messages" class="flex-1 overflow-y-auto px-4 lg:px-0">
+      <div id="emptyState" class="h-full flex flex-col items-center justify-center text-center px-6 max-w-xl mx-auto">
+        <svg width="56" height="56" viewBox="0 0 30 30" fill="none" class="mb-5 opacity-90">
+          <line x1="15" y1="15" x2="5" y2="7" stroke="#7C5CFF" stroke-width="1"/>
+          <line x1="15" y1="15" x2="25" y2="7" stroke="#7C5CFF" stroke-width="1"/>
+          <line x1="15" y1="15" x2="5" y2="23" stroke="#35E7C7" stroke-width="1"/>
+          <line x1="15" y1="15" x2="25" y2="23" stroke="#35E7C7" stroke-width="1"/>
+          <circle cx="5" cy="7" r="2.6" fill="#15121F" stroke="#7C5CFF" stroke-width="1"/>
+          <circle cx="25" cy="7" r="2.6" fill="#15121F" stroke="#7C5CFF" stroke-width="1"/>
+          <circle cx="5" cy="23" r="2.6" fill="#15121F" stroke="#35E7C7" stroke-width="1"/>
+          <circle cx="25" cy="23" r="2.6" fill="#15121F" stroke="#35E7C7" stroke-width="1"/>
+          <circle cx="15" cy="15" r="4.5" fill="#7C5CFF"/>
+        </svg>
+        <h2 class="font-display font-semibold text-2xl mb-2">O que você quer explorar?</h2>
+        <p class="text-muted text-[14.5px] mb-7 leading-relaxed">Nexus conecta suas perguntas às respostas. Escreva algo abaixo ou escolha um ponto de partida.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full">
+          <button class="suggestion-chip text-left rounded-xl border border-hair bg-surface hover:bg-surfacelight transition-colors px-4 py-3 text-[13.5px] text-ink/90">Explique um conceito complexo de forma simples</button>
+          <button class="suggestion-chip text-left rounded-xl border border-hair bg-surface hover:bg-surfacelight transition-colors px-4 py-3 text-[13.5px] text-ink/90">Revise e melhore um trecho de código</button>
+          <button class="suggestion-chip text-left rounded-xl border border-hair bg-surface hover:bg-surfacelight transition-colors px-4 py-3 text-[13.5px] text-ink/90">Ajude a estruturar um plano de estudos</button>
+          <button class="suggestion-chip text-left rounded-xl border border-hair bg-surface hover:bg-surfacelight transition-colors px-4 py-3 text-[13.5px] text-ink/90">Dê ideias para um projeto pessoal</button>
         </div>
-
+      </div>
+      <div id="messageList" class="max-w-3xl mx-auto py-6 space-y-6 hidden"></div>
     </div>
 
-
-    <div class="sobre">
-
-        <h2>
-            Sobre o site
-        </h2>
-
-        <p>
-            O meu site foi criado para reunir
-            meus projetos em um único lugar.
-            Aqui você poderá encontrar jogos,
-            páginas, experiências e outros
-            projetos que eu criar no futuro.
-        </p>
-
-
-        <div class="infos">
-
-            <div class="infoCard">
-
-                <h3>
-                    🎮 Jogos
-                </h3>
-
-                <p>
-                    Jogos feitos diretamente
-                    para funcionar no navegador.
-                </p>
-
-            </div>
-
-
-            <div class="infoCard">
-
-                <h3>
-                    💻 Projetos
-                </h3>
-
-                <p>
-                    Projetos de programação,
-                    sites e experiências.
-                </p>
-
-            </div>
-
-
-            <div class="infoCard">
-
-                <h3>
-                    🚀 Em evolução
-                </h3>
-
-                <p>
-                    O site continuará recebendo
-                    novidades conforme novos
-                    projetos forem criados.
-                </p>
-
-            </div>
-
+    <!-- Input -->
+    <div class="border-t border-hair px-4 lg:px-6 py-4">
+      <div class="max-w-3xl mx-auto">
+        <div class="flex items-end gap-2 rounded-2xl border border-hair bg-surface focus-within:border-primary/60 transition-colors px-3.5 py-2.5">
+          <textarea id="promptInput" rows="1" placeholder="Envie uma mensagem para Nexus..."
+            class="flex-1 bg-transparent resize-none outline-none text-[14.5px] leading-relaxed placeholder:text-muted/70 max-h-40 py-1.5"></textarea>
+          <button id="sendBtn" disabled
+            class="shrink-0 grid place-items-center w-9 h-9 rounded-xl bg-primary disabled:bg-hair disabled:cursor-not-allowed transition-colors">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3.5 7.5M8 3l4.5 4.5" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
-
+        <p class="text-[11.5px] text-muted/70 text-center mt-2">Nexus IA pode cometer erros. Confira informações importantes.</p>
+      </div>
     </div>
+  </main>
+</div>
 
-
-    <footer>
-        meu site • Projetos e jogos
-    </footer>
-
-</section>
-
-
-<!-- =========================
-     PROJETOS
-========================= -->
-
-<section
-    id="projetos"
-    class="pagina"
->
-
-    <div class="tituloPagina">
-
-        <h1>
-            Projetos
-        </h1>
-
-        <p>
-            Veja os projetos disponíveis no site.
-        </p>
-
-    </div>
-
-
-    <div class="gradeProjetos">
-
-        <div class="cardProjeto">
-
-            <div class="iconeProjeto">
-                🐍
-            </div>
-
-            <h2>
-                Jogo da Cobrinha
-            </h2>
-
-            <p>
-                Jogo clássico da cobrinha feito
-                em HTML, CSS e JavaScript.
-                Disponível para computador
-                e celular.
-            </p>
-
-            <button
-                class="botaoProjeto"
-                onclick="abrirEscolha()"
-            >
-                Jogar
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     ESCOLHER PC OU CELULAR
-========================= -->
-
-<section
-    id="escolherDispositivo"
-    class="pagina"
->
-
-    <div class="escolhaContainer">
-
-        <h1>
-            🐍 Jogo da Cobrinha
-        </h1>
-
-        <p>
-            Escolha como você vai jogar.
-        </p>
-
-
-        <div class="opcoesDispositivo">
-
-            <button
-                class="botaoDispositivo"
-                onclick="escolherModo('computador')"
-            >
-
-                <span class="dispositivoIcone">
-                    💻
-                </span>
-
-                Computador
-
-            </button>
-
-
-            <button
-                class="botaoDispositivo"
-                onclick="escolherModo('celular')"
-            >
-
-                <span class="dispositivoIcone">
-                    📱
-                </span>
-
-                Celular
-
-            </button>
-
-        </div>
-
-
-        <br><br>
-
-
-        <button
-            class="botaoSecundario"
-            onclick="abrirPagina('projetos')"
-        >
-            ← Voltar para projetos
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     JOGO
-========================= -->
-
-<section
-    id="paginaJogo"
-    class="pagina"
->
-
-    <h1>
-        🐍 Jogo da Cobrinha
-    </h1>
-
-
-    <div id="pontosContainer">
-
-        Pontos:
-
-        <span id="pontos">
-            0
-        </span>
-
-    </div>
-
-
-    <div id="canvasContainer">
-
-        <canvas
-            id="jogo"
-            width="1280"
-            height="720"
-        ></canvas>
-
-    </div>
-
-
-    <div id="mensagem"></div>
-
-
-    <button id="reiniciar">
-        Tentar novamente
+<!-- SETTINGS SLIDE-OVER -->
+<div id="settingsOverlay" class="fixed inset-0 bg-black/60 z-50 hidden"></div>
+<aside id="settingsPanel"
+  class="fixed top-0 right-0 z-50 h-full w-full sm:w-[420px] bg-surface border-l border-hair translate-x-full transition-transform duration-300 flex flex-col">
+  <div class="flex items-center justify-between px-5 py-5 border-b border-hair">
+    <h2 class="font-display font-semibold text-lg">Configurações</h2>
+    <button id="closeSettingsBtn" class="p-1 text-muted hover:text-ink">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
     </button>
+  </div>
 
+  <div class="flex-1 overflow-y-auto px-5 py-6 space-y-6">
 
-    <!-- CONTROLE MOBILE -->
-
-    <div id="controlesMobile">
-
-        <div class="linhaControle">
-
-            <button
-                class="controle"
-                id="cima"
-            >
-                ▲
-            </button>
-
-        </div>
-
-
-        <div class="linhaControle">
-
-            <button
-                class="controle"
-                id="esquerda"
-            >
-                ◀
-            </button>
-
-
-            <button
-                class="controle"
-                id="baixo"
-            >
-                ▼
-            </button>
-
-
-            <button
-                class="controle"
-                id="direita"
-            >
-                ▶
-            </button>
-
-        </div>
-
+    <div>
+      <p class="text-[13px] text-muted leading-relaxed">
+        Nexus agora está configurado para usar a <span class="text-ink/90 font-medium">Ollama Cloud</span>,
+        compatível com a API da OpenAI. O endpoint padrão é
+        <span class="font-mono text-ink/80">https://ollama.com/v1</span> e o modelo padrão é
+        <span class="font-mono text-ink/80">gemma4:31b</span>. A chave fica salva apenas no
+        <span class="text-ink/90 font-medium">localStorage</span> do seu navegador.
+      </p>
     </div>
 
-
-    <div class="botoesJogo">
-
-        <button
-            class="botaoSecundario"
-            onclick="abrirEscolha()"
-        >
-            Trocar dispositivo
-        </button>
-
-
-        <button
-            class="botaoSecundario"
-            onclick="abrirPagina('projetos')"
-        >
-            Voltar para projetos
-        </button>
-
+    <div class="space-y-1.5">
+      <label class="text-[13px] font-medium text-ink/90">URL do endpoint</label>
+      <input id="baseUrlInput" type="text" placeholder="https://ollama.com/v1"
+        class="w-full rounded-lg border border-hair bg-void px-3 py-2.5 outline-none text-[13.5px] font-mono placeholder:text-muted/60 focus:border-primary/60">
+      <p class="text-[12px] text-muted/80">Padrão definido para Ollama Cloud: <span class="font-mono">https://ollama.com/v1</span>.</p>
     </div>
 
-</section>
+    <div class="space-y-1.5">
+      <label class="text-[13px] font-medium text-ink/90">Modelo</label>
+      <input id="modelInput" type="text" placeholder="gemma4:31b"
+        class="w-full rounded-lg border border-hair bg-void px-3 py-2.5 outline-none text-[13.5px] font-mono placeholder:text-muted/60 focus:border-primary/60">
+    </div>
 
+    <div class="space-y-1.5">
+      <label class="text-[13px] font-medium text-ink/90">Chave de API da Ollama Cloud</label>
+      <div class="flex items-center rounded-lg border border-hair bg-void px-3 py-2.5 focus-within:border-primary/60">
+        <input id="apiKeyInput" type="password" autocomplete="off" placeholder="cole sua OLLAMA_API_KEY"
+          class="flex-1 bg-transparent outline-none text-[13.5px] font-mono placeholder:text-muted/60">
+        <button id="toggleKeyVisibility" type="button" class="text-muted hover:text-ink text-[12px] ml-2">mostrar</button>
+      </div>
+      <p class="text-[12px] text-muted/80">No Python, essa chave vem de <span class="font-mono">os.environ["OLLAMA_API_KEY"]</span>. No navegador, cole a chave aqui.</p>
+    </div>
+
+    <div class="rounded-lg border border-hair bg-void px-3.5 py-3 text-[12px] text-muted leading-relaxed">
+      <span class="text-ink/90 font-medium">Atenção:</span> não publique este HTML com sua chave já salva.
+      Como o site roda no navegador, qualquer chave usada no front-end pode ficar exposta para quem tiver acesso ao dispositivo ou ao código.
+    </div>
+
+    <div id="settingsFeedback" class="hidden text-[13px] rounded-lg px-3.5 py-2.5"></div>
+  </div>
+
+  <div class="px-5 py-5 border-t border-hair space-y-2.5">
+    <button id="saveSettingsBtn" class="w-full rounded-lg bg-primary hover:bg-primary/90 transition-colors py-2.5 text-[13.5px] font-medium">Salvar</button>
+    <button id="clearSettingsBtn" class="w-full rounded-lg border border-hair hover:bg-void transition-colors py-2.5 text-[13.5px] font-medium text-muted hover:text-ink">Remover chave da API</button>
+  </div>
+</aside>
 
 <script>
+(function () {
+  "use strict";
 
-/* =========================
-   SISTEMA DO SITE
-========================= */
+  // ---------- Storage helpers ----------
+  const SETTINGS_KEY = "nexus_settings";
+  const CONV_KEY = "nexus_conversations";
+  const DEFAULT_BASE_URL = "https://ollama.com/v1";
+  const DEFAULT_MODEL = "gemma4:31b";
 
-const menuMobile = document.getElementById("menuMobile");
-const menuNavegacao = document.getElementById("menuNavegacao");
+  function loadSettings() {
+    try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+  function saveSettings(s) { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }
 
-menuMobile.addEventListener("click", function () {
-    menuNavegacao.classList.toggle("aberto");
-    menuMobile.textContent = menuNavegacao.classList.contains("aberto") ? "×" : "☰";
-});
+  function loadConversations() {
+    try { return JSON.parse(localStorage.getItem(CONV_KEY)) || []; }
+    catch (e) { return []; }
+  }
+  function persistConversations() { localStorage.setItem(CONV_KEY, JSON.stringify(conversations)); }
 
-function fecharMenuMobile() {
-    menuNavegacao.classList.remove("aberto");
-    menuMobile.textContent = "☰";
-}
+  // ---------- State ----------
+  let settings = loadSettings();
+  let conversations = loadConversations();
+  let activeId = null;
+  let isStreaming = false;
 
-function atualizarMenuAtivo(id) {
-    document.querySelectorAll("nav button").forEach(botao => {
-        botao.classList.remove("navAtivo");
+  // ---------- DOM refs ----------
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const menuBtn = document.getElementById("menuBtn");
+  const newChatBtn = document.getElementById("newChatBtn");
+  const conversationList = document.getElementById("conversationList");
+  const messagesWrap = document.getElementById("messages");
+  const emptyState = document.getElementById("emptyState");
+  const messageList = document.getElementById("messageList");
+  const promptInput = document.getElementById("promptInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const chatTitle = document.getElementById("chatTitle");
+  const modeLabel = document.getElementById("modeLabel");
+  const keyStatusDot = document.getElementById("keyStatusDot");
+
+  const openSettingsBtn = document.getElementById("openSettingsBtn");
+  const closeSettingsBtn = document.getElementById("closeSettingsBtn");
+  const settingsOverlay = document.getElementById("settingsOverlay");
+  const settingsPanel = document.getElementById("settingsPanel");
+  const apiKeyInput = document.getElementById("apiKeyInput");
+  const baseUrlInput = document.getElementById("baseUrlInput");
+  const modelInput = document.getElementById("modelInput");
+  const toggleKeyVisibility = document.getElementById("toggleKeyVisibility");
+  const saveSettingsBtn = document.getElementById("saveSettingsBtn");
+  const clearSettingsBtn = document.getElementById("clearSettingsBtn");
+  const settingsFeedback = document.getElementById("settingsFeedback");
+
+  // ---------- Utilities ----------
+  function escapeHtml(str) {
+    return str.replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+  function renderMarkdownLite(text) {
+    let escaped = escapeHtml(text);
+    escaped = escaped.replace(/```([\s\S]*?)```/g, (_, code) => `<pre><code>${code.trim()}</code></pre>`);
+    escaped = escaped.replace(/`([^`]+)`/g, "<code>$1</code>");
+    escaped = escaped.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    escaped = escaped.split(/\n{2,}/).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
+    return escaped;
+  }
+
+  function getConfiguredBaseURL() {
+    return settings.baseUrl && settings.baseUrl.trim() ? settings.baseUrl.trim() : DEFAULT_BASE_URL;
+  }
+
+  function getConfiguredModel() {
+    return settings.model && settings.model.trim() ? settings.model.trim() : DEFAULT_MODEL;
+  }
+
+  function getConfiguredApiKey() {
+    return settings.apiKey && settings.apiKey.trim() ? settings.apiKey.trim() : "";
+  }
+
+  function updateModeLabel() {
+    const hasKey = !!getConfiguredApiKey();
+    modeLabel.textContent = hasKey ? `Conectado · ${getConfiguredModel()}` : `Ollama Cloud · aguardando chave`;
+    keyStatusDot.className = "ml-auto w-1.5 h-1.5 rounded-full " + (hasKey ? "bg-secondary" : "bg-muted/50");
+  }
+
+  // ---------- Conversation management ----------
+  function newConversation() {
+    const conv = { id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()), title: "Nova conversa", messages: [] };
+    conversations.unshift(conv);
+    activeId = conv.id;
+    persistConversations();
+    renderSidebar();
+    renderActiveConversation();
+    closeSidebarMobile();
+  }
+
+  function getActive() {
+    return conversations.find(c => c.id === activeId);
+  }
+
+  function renderSidebar() {
+    conversationList.innerHTML = "";
+    conversations.forEach(conv => {
+      const btn = document.createElement("button");
+      const isActive = conv.id === activeId;
+      btn.className = "w-full text-left px-3 py-2.5 rounded-lg text-[13.5px] mb-1 truncate transition-colors " +
+        (isActive ? "bg-surfacelight text-ink" : "text-muted hover:text-ink hover:bg-surfacelight/60");
+      btn.textContent = conv.title || "Nova conversa";
+      btn.addEventListener("click", () => {
+        activeId = conv.id;
+        renderSidebar();
+        renderActiveConversation();
+        closeSidebarMobile();
+      });
+      conversationList.appendChild(btn);
     });
+  }
 
-    if (id === "inicio") {
-        document.querySelector('nav button[onclick*="inicio"]').classList.add("navAtivo");
+  function renderActiveConversation() {
+    const conv = getActive();
+    if (!conv || conv.messages.length === 0) {
+      emptyState.classList.remove("hidden");
+      messageList.classList.add("hidden");
+      messageList.innerHTML = "";
+      chatTitle.textContent = "Nova conversa";
+      return;
     }
+    emptyState.classList.add("hidden");
+    messageList.classList.remove("hidden");
+    chatTitle.textContent = conv.title;
+    messageList.innerHTML = "";
+    conv.messages.forEach(m => appendMessageBubble(m.role, m.content, false));
+    scrollToBottom();
+  }
 
-    if (id === "projetos") {
-        document.querySelector('nav button[onclick*="projetos"]').classList.add("navAtivo");
-    }
-}
+  function appendMessageBubble(role, content, animate = true) {
+    const row = document.createElement("div");
+    row.className = "flex " + (role === "user" ? "justify-end" : "justify-start") + (animate ? " msg-enter" : "");
 
-let modo = "";
-
-
-function esconderPaginas() {
-
-    document
-        .querySelectorAll(".pagina")
-        .forEach(
-
-            pagina => {
-
-                pagina.classList.remove(
-                    "ativa"
-                );
-
-            }
-
-        );
-
-}
-
-
-function abrirPagina(id) {
-
-    esconderPaginas();
-
-    document
-        .getElementById(id)
-        .classList
-        .add("ativa");
-
-    modo = "";
-
-    fecharMenuMobile();
-    atualizarMenuAtivo(id);
-
-    window.scrollTo(
-        0,
-        0
-    );
-
-}
-
-
-function abrirEscolha() {
-
-    esconderPaginas();
-
-    document
-        .getElementById(
-            "escolherDispositivo"
-        )
-        .classList
-        .add("ativa");
-
-    modo = "";
-
-    window.scrollTo(
-        0,
-        0
-    );
-
-}
-
-
-function escolherModo(dispositivo) {
-
-    modo =
-        dispositivo;
-
-    esconderPaginas();
-
-    document
-        .getElementById(
-            "paginaJogo"
-        )
-        .classList
-        .add("ativa");
-
-
-    if (
-        modo === "celular"
-    ) {
-
-        controlesMobile.style.display =
-            "block";
-
+    const bubble = document.createElement("div");
+    if (role === "user") {
+      bubble.className = "max-w-[80%] rounded-2xl rounded-br-md bg-primary/90 text-white px-4 py-2.5 text-[14.5px] leading-relaxed";
+      bubble.textContent = content;
     } else {
+      bubble.className = "max-w-[85%] rounded-2xl rounded-bl-md bg-surface border border-hair px-4 py-3 text-[14.5px] leading-relaxed prose-msg";
+      bubble.innerHTML = renderMarkdownLite(content);
+    }
+    row.appendChild(bubble);
+    messageList.appendChild(row);
+    return bubble;
+  }
 
-        controlesMobile.style.display =
-            "none";
+  function appendTypingIndicator() {
+    const row = document.createElement("div");
+    row.className = "flex justify-start msg-enter";
+    row.id = "typingRow";
+    row.innerHTML = `
+      <div class="rounded-2xl rounded-bl-md bg-surface border border-hair px-4 py-3.5 flex items-center gap-1.5">
+        <span class="typing-dot w-1.5 h-1.5 rounded-full bg-muted"></span>
+        <span class="typing-dot w-1.5 h-1.5 rounded-full bg-muted"></span>
+        <span class="typing-dot w-1.5 h-1.5 rounded-full bg-muted"></span>
+      </div>`;
+    messageList.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
 
+  function scrollToBottom() {
+    messagesWrap.scrollTop = messagesWrap.scrollHeight;
+  }
+
+  // ---------- Sending messages ----------
+  async function handleSend() {
+    const text = promptInput.value.trim();
+    if (!text || isStreaming) return;
+
+    if (!activeId) newConversation();
+    const conv = getActive();
+
+    if (conv.messages.length === 0) {
+      conv.title = text.length > 42 ? text.slice(0, 42) + "…" : text;
+    }
+    conv.messages.push({ role: "user", content: text });
+    persistConversations();
+    renderSidebar();
+
+    emptyState.classList.add("hidden");
+    messageList.classList.remove("hidden");
+    chatTitle.textContent = conv.title;
+    appendMessageBubble("user", text);
+    promptInput.value = "";
+    autoResize();
+    updateSendState();
+    scrollToBottom();
+
+    isStreaming = true;
+    const typingRow = appendTypingIndicator();
+
+    try {
+      const reply = await getAIResponse(conv.messages);
+      typingRow.remove();
+      conv.messages.push({ role: "assistant", content: reply });
+      persistConversations();
+      appendMessageBubble("assistant", reply);
+      scrollToBottom();
+    } catch (err) {
+      typingRow.remove();
+      const msg = "Não consegui obter uma resposta. " + (err && err.message ? err.message : "Verifique sua conexão ou as configurações da API.");
+      appendMessageBubble("assistant", msg);
+      scrollToBottom();
+    } finally {
+      isStreaming = false;
+    }
+  }
+
+  // Cliente OpenAI compatível com a Ollama Cloud
+  let openaiClient = null;
+  let openaiClientSignature = null;
+
+  async function getOpenAIClient(baseURL, apiKey) {
+    const signature = baseURL + "::" + apiKey;
+    if (openaiClient && openaiClientSignature === signature) return openaiClient;
+    const { default: OpenAI } = await import("https://esm.sh/openai@4");
+    openaiClient = new OpenAI({ baseURL, apiKey, dangerouslyAllowBrowser: true });
+    openaiClientSignature = signature;
+    return openaiClient;
+  }
+
+  async function getAIResponse(history) {
+    const baseURL = getConfiguredBaseURL();
+    const apiKey = getConfiguredApiKey();
+    const model = getConfiguredModel();
+
+    if (!apiKey) {
+      return "Para usar a API da Ollama Cloud, abra **Configurações** e cole sua `OLLAMA_API_KEY`. O endpoint já está definido como `https://ollama.com/v1` e o modelo como `gemma4:31b`.";
     }
 
-
-    iniciarJogo();
-
-    window.scrollTo(
-        0,
-        0
-    );
-
-}
-
-
-/* =========================
-   JOGO
-========================= */
-
-const canvas =
-    document.getElementById(
-        "jogo"
-    );
-
-
-const ctx =
-    canvas.getContext(
-        "2d"
-    );
-
-
-const pontosTexto =
-    document.getElementById(
-        "pontos"
-    );
-
-
-const mensagem =
-    document.getElementById(
-        "mensagem"
-    );
-
-
-const botaoReiniciar =
-    document.getElementById(
-        "reiniciar"
-    );
-
-
-const controlesMobile =
-    document.getElementById(
-        "controlesMobile"
-    );
-
-
-/* TAMANHO DOS QUADRADOS */
-
-const tamanho = 40;
-
-
-/* VELOCIDADE DA COBRINHA */
-
-const TEMPO_MOVIMENTO = 170;
-
-
-/* FPS */
-
-const FPS = 30;
-
-
-const TEMPO_FRAME =
-    1000 / FPS;
-
-
-
-let cobra;
-
-let cobraAnterior;
-
-let direcao;
-
-let proximaDirecao;
-
-let comida;
-
-let pontos;
-
-let gameOver;
-
-let ultimoMovimento;
-
-let ultimoFrame = 0;
-
-
-/* =========================
-   INICIAR
-========================= */
-
-function iniciarJogo() {
-
-    cobra = [
-
-        {
-            x: 600,
-            y: 360
-        }
-
-    ];
-
-
-    cobraAnterior = [
-
-        {
-            x: 600,
-            y: 360
-        }
-
-    ];
-
-
-    direcao =
-        "direita";
-
-
-    proximaDirecao =
-        "direita";
-
-
-    pontos = 0;
-
-
-    gameOver =
-        false;
-
-
-    mensagem.textContent =
-        "";
-
-
-    botaoReiniciar.style.display =
-        "none";
-
-
-    pontosTexto.textContent =
-        pontos;
-
-
-    ultimoMovimento =
-        performance.now();
-
-
-    criarComida();
-
-}
-
-
-/* =========================
-   COMIDA
-========================= */
-
-function criarComida() {
-
-    let x;
-
-    let y;
-
-
-    do {
-
-        x =
-
-            Math.floor(
-
-                Math.random()
-
-                *
-
-                (
-                    canvas.width
-                    /
-                    tamanho
-                )
-
-            )
-
-            *
-
-            tamanho;
-
-
-        y =
-
-            Math.floor(
-
-                Math.random()
-
-                *
-
-                (
-                    canvas.height
-                    /
-                    tamanho
-                )
-
-            )
-
-            *
-
-            tamanho;
-
-
-    } while (
-
-        cobra.some(
-
-            parte =>
-
-                parte.x === x
-
-                &&
-
-                parte.y === y
-
-        )
-
-    );
-
-
-    comida = {
-        x,
-        y
-    };
-
-}
-
-
-/* =========================
-   ATUALIZAR
-========================= */
-
-function atualizar() {
-
-    if (
-        gameOver
-    ) {
-
-        return;
-
+    let client;
+    try {
+      client = await getOpenAIClient(baseURL, apiKey);
+    } catch (e) {
+      throw new Error("Não foi possível carregar o SDK da OpenAI. Verifique sua conexão com a internet.");
     }
 
-
-    direcao =
-        proximaDirecao;
-
-
-    cobraAnterior =
-
-        cobra.map(
-
-            parte => ({
-
-                x: parte.x,
-
-                y: parte.y
-
-            })
-
-        );
-
-
-    const cabeca = {
-
-        ...cobra[
-            cobra.length - 1
-        ]
-
-    };
-
-
-    if (
-        direcao === "direita"
-    ) {
-
-        cabeca.x +=
-            tamanho;
-
+    let completion;
+    try {
+      completion = await client.chat.completions.create({
+        model,
+        messages: [
+          { role: "system", content: "Você é Nexus, um assistente de IA prestativo, claro e direto. Responda em português do Brasil por padrão, a menos que o usuário escreva em outro idioma." },
+          ...history.map(m => ({ role: m.role, content: m.content })),
+        ],
+      });
+    } catch (e) {
+      const detail = e && e.message ? e.message : "";
+      throw new Error(`Falha ao falar com ${baseURL}. ${detail} Confira se a chave OLLAMA_API_KEY está correta, se o modelo gemma4:31b está disponível na sua conta e se o endpoint é https://ollama.com/v1.`.trim());
     }
 
+    const content = completion?.choices?.[0]?.message?.content;
+    if (!content) throw new Error("A resposta do modelo veio em um formato inesperado.");
+    return content;
+  }
 
-    if (
-        direcao === "esquerda"
-    ) {
+  // ---------- Demo mode ----------
+  const demoOpeners = [
+    "Estou em modo demonstração, então esta é uma resposta simulada — mas veja como eu abordaria isso:",
+    "Sem uma chave de API conectada no momento, então vou responder no modo demonstração:",
+    "Aqui está uma resposta de exemplo, gerada localmente pelo modo demonstração:",
+  ];
 
-        cabeca.x -=
-            tamanho;
+  function demoResponse(userText) {
+    const opener = demoOpeners[Math.floor(Math.random() * demoOpeners.length)];
+    const lower = userText.toLowerCase();
 
-    }
-
-
-    if (
-        direcao === "cima"
-    ) {
-
-        cabeca.y -=
-            tamanho;
-
-    }
-
-
-    if (
-        direcao === "baixo"
-    ) {
-
-        cabeca.y +=
-            tamanho;
-
-    }
-
-
-    /* PAREDE */
-
-    if (
-
-        cabeca.x < 0
-
-        ||
-
-        cabeca.x >=
-        canvas.width
-
-        ||
-
-        cabeca.y < 0
-
-        ||
-
-        cabeca.y >=
-        canvas.height
-
-    ) {
-
-        perder();
-
-        return;
-
-    }
-
-
-    /* CORPO */
-
-    if (
-
-        cobra.some(
-
-            parte =>
-
-                parte.x ===
-                cabeca.x
-
-                &&
-
-                parte.y ===
-                cabeca.y
-
-        )
-
-    ) {
-
-        perder();
-
-        return;
-
-    }
-
-
-    cobra.push(
-        cabeca
-    );
-
-
-    /* COMIDA */
-
-    if (
-
-        cabeca.x ===
-        comida.x
-
-        &&
-
-        cabeca.y ===
-        comida.y
-
-    ) {
-
-        pontos++;
-
-
-        pontosTexto.textContent =
-            pontos;
-
-
-        criarComida();
-
-
+    let body;
+    if (lower.includes("código") || lower.includes("codigo") || lower.includes("function") || lower.includes("bug")) {
+      body = "Para revisar código de verdade, cole sua `OLLAMA_API_KEY` em **Configurações**. Em geral, ao revisar um trecho eu observo três coisas: nomes claros para variáveis, tratamento de erros nos pontos de falha prováveis, e se a lógica pode ser simplificada sem perder legibilidade.";
+    } else if (lower.includes("plano") || lower.includes("estudo") || lower.includes("aprender")) {
+      body = "Um plano de estudos costuma funcionar melhor dividido em três partes: fundamentos (o vocabulário e os conceitos base), prática guiada (exercícios com feedback rápido) e aplicação livre (um projeto pequeno seu). Com uma chave de API conectada, posso montar um cronograma detalhado para o seu caso.";
+    } else if (lower.includes("ideia") || lower.includes("projeto")) {
+      body = "Boas ideias de projeto costumam nascer da interseção entre algo que você usa no dia a dia e algo que te incomoda nele. Pense em uma tarefa chata que você repete toda semana — ela provavelmente esconde um projeto interessante.";
     } else {
-
-        cobra.shift();
-
+      body = "No modo demonstração, minhas respostas são fixas e não analisam o conteúdo real da sua mensagem. Para conversar com o modelo `gemma4:31b`, abra **Configurações** no menu lateral e cole sua `OLLAMA_API_KEY`.";
     }
 
+    return `${opener}\n\n${body}`;
+  }
 
-    while (
+  // ---------- Input handling ----------
+  function autoResize() {
+    promptInput.style.height = "auto";
+    promptInput.style.height = Math.min(promptInput.scrollHeight, 160) + "px";
+  }
+  function updateSendState() {
+    sendBtn.disabled = promptInput.value.trim().length === 0;
+  }
 
-        cobraAnterior.length
-
-        <
-
-        cobra.length
-
-    ) {
-
-        cobraAnterior.unshift({
-
-            ...cobraAnterior[0]
-
-        });
-
+  promptInput.addEventListener("input", () => { autoResize(); updateSendState(); });
+  promptInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
     }
-
-}
-
-
-/* =========================
-   INTERPOLAÇÃO
-========================= */
-
-function interpolar(
-    inicio,
-    fim,
-    progresso
-) {
-
-    return inicio +
-        (fim - inicio)
-        *
-        progresso;
-
-}
-
-
-/* =========================
-   DESENHAR
-========================= */
-
-function desenhar(
-    progresso
-) {
-
-    ctx.fillStyle =
-        "#181818";
-
-
-    ctx.fillRect(
-
-        0,
-        0,
-
-        canvas.width,
-        canvas.height
-
-    );
-
-
-    /* COMIDA */
-
-    ctx.fillStyle =
-        "#e63c3c";
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-
-        comida.x +
-        tamanho / 2,
-
-        comida.y +
-        tamanho / 2,
-
-        16,
-
-        0,
-
-        Math.PI * 2
-
-    );
-
-
-    ctx.fill();
-
-
-    /* COBRA */
-
-    cobra.forEach(
-
-        (
-            parte,
-            index
-        ) => {
-
-
-            const anterior =
-
-                cobraAnterior[
-                    index
-                ]
-
-                ||
-
-                parte;
-
-
-            const x =
-
-                interpolar(
-
-                    anterior.x,
-
-                    parte.x,
-
-                    progresso
-
-                );
-
-
-            const y =
-
-                interpolar(
-
-                    anterior.y,
-
-                    parte.y,
-
-                    progresso
-
-                );
-
-
-            const cabeca =
-
-                index ===
-                cobra.length - 1;
-
-
-            if (
-                cabeca
-            ) {
-
-                ctx.fillStyle =
-                    "#00dc50";
-
-            } else {
-
-                ctx.fillStyle =
-                    "#00963c";
-
-            }
-
-
-            ctx.fillRect(
-
-                x + 2,
-
-                y + 2,
-
-                tamanho - 4,
-
-                tamanho - 4
-
-            );
-
-
-            if (
-                cabeca
-            ) {
-
-                desenharRosto(
-                    x,
-                    y
-                );
-
-            }
-
-        }
-
-    );
-
-}
-
-
-/* =========================
-   ROSTO
-========================= */
-
-function desenharRosto(
-    x,
-    y
-) {
-
-    let olho1;
-
-    let olho2;
-
-
-    if (
-        direcao ===
-        "direita"
-    ) {
-
-        olho1 = {
-
-            x: x + 29,
-
-            y: y + 11
-
-        };
-
-
-        olho2 = {
-
-            x: x + 29,
-
-            y: y + 29
-
-        };
-
+  });
+  sendBtn.addEventListener("click", handleSend);
+
+  document.querySelectorAll(".suggestion-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      promptInput.value = chip.textContent;
+      autoResize();
+      updateSendState();
+      handleSend();
+    });
+  });
+
+  newChatBtn.addEventListener("click", newConversation);
+
+  // ---------- Mobile sidebar ----------
+  function openSidebarMobile() {
+    sidebar.classList.remove("-translate-x-full");
+    overlay.classList.remove("hidden");
+  }
+  function closeSidebarMobile() {
+    if (window.innerWidth < 1024) {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
     }
+  }
+  menuBtn.addEventListener("click", openSidebarMobile);
+  overlay.addEventListener("click", closeSidebarMobile);
 
+  // ---------- Settings panel ----------
+  function openSettings() {
+    apiKeyInput.value = settings.apiKey || "";
+    baseUrlInput.value = settings.baseUrl || DEFAULT_BASE_URL;
+    modelInput.value = settings.model || DEFAULT_MODEL;
+    settingsFeedback.classList.add("hidden");
+    settingsOverlay.classList.remove("hidden");
+    settingsPanel.classList.remove("translate-x-full");
+  }
+  function closeSettings() {
+    settingsOverlay.classList.add("hidden");
+    settingsPanel.classList.add("translate-x-full");
+  }
+  openSettingsBtn.addEventListener("click", openSettings);
+  closeSettingsBtn.addEventListener("click", closeSettings);
+  settingsOverlay.addEventListener("click", closeSettings);
 
-    else if (
-        direcao ===
-        "esquerda"
-    ) {
+  toggleKeyVisibility.addEventListener("click", () => {
+    const isPassword = apiKeyInput.type === "password";
+    apiKeyInput.type = isPassword ? "text" : "password";
+    toggleKeyVisibility.textContent = isPassword ? "ocultar" : "mostrar";
+  });
 
-        olho1 = {
+  function showFeedback(text, tone) {
+    settingsFeedback.textContent = text;
+    settingsFeedback.className = "text-[13px] rounded-lg px-3.5 py-2.5 " +
+      (tone === "success" ? "bg-secondary/10 text-secondary border border-secondary/30" : "bg-primary/10 text-primary border border-primary/30");
+    settingsFeedback.classList.remove("hidden");
+  }
 
-            x: x + 11,
+  saveSettingsBtn.addEventListener("click", () => {
+    settings = {
+      apiKey: apiKeyInput.value.trim(),
+      baseUrl: baseUrlInput.value.trim() || DEFAULT_BASE_URL,
+      model: modelInput.value.trim() || DEFAULT_MODEL,
+    };
+    saveSettings(settings);
+    updateModeLabel();
+    showFeedback(settings.apiKey ? `Configurações salvas. Nexus agora fala com ${settings.baseUrl} usando ${settings.model}.` : "Configurações salvas, mas ainda falta colar a OLLAMA_API_KEY.", "success");
+  });
 
-            y: y + 11
+  clearSettingsBtn.addEventListener("click", () => {
+    settings = {};
+    saveSettings(settings);
+    apiKeyInput.value = "";
+    baseUrlInput.value = DEFAULT_BASE_URL;
+    modelInput.value = DEFAULT_MODEL;
+    updateModeLabel();
+    showFeedback("Chave removida. Nexus continua com o endpoint da Ollama Cloud, mas só responde pelo modelo quando você colar a OLLAMA_API_KEY.", "success");
+  });
 
-        };
-
-
-        olho2 = {
-
-            x: x + 11,
-
-            y: y + 29
-
-        };
-
+  // ---------- Init ----------
+  function init() {
+    updateModeLabel();
+    if (conversations.length === 0) {
+      newConversation();
+    } else {
+      activeId = conversations[0].id;
+      renderSidebar();
+      renderActiveConversation();
     }
-
-
-    else if (
-        direcao ===
-        "cima"
-    ) {
-
-        olho1 = {
-
-            x: x + 11,
-
-            y: y + 11
-
-        };
-
-
-        olho2 = {
-
-            x: x + 29,
-
-            y: y + 11
-
-        };
-
+    if (window.innerWidth >= 1024) {
+      sidebar.classList.remove("-translate-x-full");
     }
+  }
 
-
-    else {
-
-        olho1 = {
-
-            x: x + 11,
-
-            y: y + 29
-
-        };
-
-
-        olho2 = {
-
-            x: x + 29,
-
-            y: y + 29
-
-        };
-
-    }
-
-
-    /* OLHOS */
-
-    ctx.fillStyle =
-        "white";
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-
-        olho1.x,
-
-        olho1.y,
-
-        7,
-
-        0,
-
-        Math.PI * 2
-
-    );
-
-
-    ctx.fill();
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-
-        olho2.x,
-
-        olho2.y,
-
-        7,
-
-        0,
-
-        Math.PI * 2
-
-    );
-
-
-    ctx.fill();
-
-
-    /* PUPILAS */
-
-    ctx.fillStyle =
-        "black";
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-
-        olho1.x,
-
-        olho1.y,
-
-        4,
-
-        0,
-
-        Math.PI * 2
-
-    );
-
-
-    ctx.fill();
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-
-        olho2.x,
-
-        olho2.y,
-
-        4,
-
-        0,
-
-        Math.PI * 2
-
-    );
-
-
-    ctx.fill();
-
-}
-
-
-/* =========================
-   LOOP 30 FPS
-========================= */
-
-function loop(
-    tempo
-) {
-
-    requestAnimationFrame(
-        loop
-    );
-
-
-    if (
-
-        tempo - ultimoFrame
-
-        <
-
-        TEMPO_FRAME
-
-    ) {
-
-        return;
-
-    }
-
-
-    ultimoFrame =
-
-        tempo
-
-        -
-
-        (
-
-            (
-                tempo
-                -
-                ultimoFrame
-            )
-
-            %
-
-            TEMPO_FRAME
-
-        );
-
-
-    if (
-
-        modo === ""
-
-        ||
-
-        !document
-            .getElementById(
-                "paginaJogo"
-            )
-            .classList
-            .contains(
-                "ativa"
-            )
-
-    ) {
-
-        return;
-
-    }
-
-
-    let tempoPassado =
-
-        tempo
-
-        -
-
-        ultimoMovimento;
-
-
-    if (
-
-        tempoPassado
-
-        >=
-
-        TEMPO_MOVIMENTO
-
-    ) {
-
-        atualizar();
-
-
-        ultimoMovimento =
-            tempo;
-
-
-        tempoPassado =
-            0;
-
-    }
-
-
-    let progresso =
-
-        tempoPassado
-
-        /
-
-        TEMPO_MOVIMENTO;
-
-
-    progresso =
-
-        Math.min(
-
-            progresso,
-
-            1
-
-        );
-
-
-    desenhar(
-        progresso
-    );
-
-}
-
-
-/* =========================
-   PERDER
-========================= */
-
-function perder() {
-
-    gameOver =
-        true;
-
-
-    mensagem.textContent =
-
-        "Você perdeu! Tente novamente.";
-
-
-    botaoReiniciar.style.display =
-        "inline-block";
-
-}
-
-
-/* =========================
-   DIREÇÃO
-========================= */
-
-function mudarDirecao(
-    nova
-) {
-
-    if (
-
-        nova === "esquerda"
-
-        &&
-
-        direcao !== "direita"
-
-    ) {
-
-        proximaDirecao =
-            "esquerda";
-
-    }
-
-
-    if (
-
-        nova === "direita"
-
-        &&
-
-        direcao !== "esquerda"
-
-    ) {
-
-        proximaDirecao =
-            "direita";
-
-    }
-
-
-    if (
-
-        nova === "cima"
-
-        &&
-
-        direcao !== "baixo"
-
-    ) {
-
-        proximaDirecao =
-            "cima";
-
-    }
-
-
-    if (
-
-        nova === "baixo"
-
-        &&
-
-        direcao !== "cima"
-
-    ) {
-
-        proximaDirecao =
-            "baixo";
-
-    }
-
-}
-
-
-/* =========================
-   TECLADO
-========================= */
-
-document.addEventListener(
-
-    "keydown",
-
-    function(evento) {
-
-        if (
-            modo !==
-            "computador"
-        ) {
-
-            return;
-
-        }
-
-
-        if (
-            evento.key ===
-            "ArrowLeft"
-        ) {
-
-            evento.preventDefault();
-
-            mudarDirecao(
-                "esquerda"
-            );
-
-        }
-
-
-        if (
-            evento.key ===
-            "ArrowRight"
-        ) {
-
-            evento.preventDefault();
-
-            mudarDirecao(
-                "direita"
-            );
-
-        }
-
-
-        if (
-            evento.key ===
-            "ArrowUp"
-        ) {
-
-            evento.preventDefault();
-
-            mudarDirecao(
-                "cima"
-            );
-
-        }
-
-
-        if (
-            evento.key ===
-            "ArrowDown"
-        ) {
-
-            evento.preventDefault();
-
-            mudarDirecao(
-                "baixo"
-            );
-
-        }
-
-    }
-
-);
-
-
-/* =========================
-   BOTÕES MOBILE
-========================= */
-
-document
-.getElementById(
-    "cima"
-)
-.addEventListener(
-
-    "pointerdown",
-
-    function() {
-
-        mudarDirecao(
-            "cima"
-        );
-
-    }
-
-);
-
-
-document
-.getElementById(
-    "baixo"
-)
-.addEventListener(
-
-    "pointerdown",
-
-    function() {
-
-        mudarDirecao(
-            "baixo"
-        );
-
-    }
-
-);
-
-
-document
-.getElementById(
-    "esquerda"
-)
-.addEventListener(
-
-    "pointerdown",
-
-    function() {
-
-        mudarDirecao(
-            "esquerda"
-        );
-
-    }
-
-);
-
-
-document
-.getElementById(
-    "direita"
-)
-.addEventListener(
-
-    "pointerdown",
-
-    function() {
-
-        mudarDirecao(
-            "direita"
-        );
-
-    }
-
-);
-
-
-/* =========================
-   REINICIAR
-========================= */
-
-botaoReiniciar
-.addEventListener(
-
-    "click",
-
-    iniciarJogo
-
-);
-
-
-/* =========================
-   COMEÇAR
-========================= */
-
-atualizarMenuAtivo("inicio");
-
-requestAnimationFrame(
-    loop
-);
-
+  init();
+})();
 </script>
-
 </body>
-
 </html>
